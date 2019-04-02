@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.19)  2 APR 2019 09:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.19)  2 APR 2019 11:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -180,13 +180,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (./Rapport - Partie 1.aux) ) 
 Here is how much of TeX's memory you used:
- 2256 strings out of 492995
- 30626 string characters out of 6132704
+ 2260 strings out of 492995
+ 30672 string characters out of 6132704
  102829 words of memory out of 5000000
- 5826 multiletter control sequences out of 15000+600000
+ 5830 multiletter control sequences out of 15000+600000
  12531 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,6n,32p,417b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,6n,32p,353b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips
 /cm-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/publi
 c/cm-super/sfbx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/
@@ -195,7 +195,7 @@ cm-super/sfbx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm
 uper/sfrm1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-sup
 er/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super
 /sfrm1728.pfb>
-Output written on "Rapport - Partie 1.pdf" (1 page, 93059 bytes).
+Output written on "Rapport - Partie 1.pdf" (1 page, 79911 bytes).
 PDF statistics:
  33 PDF objects out of 1000 (max. 8388607)
  23 compressed objects within 1 object stream
