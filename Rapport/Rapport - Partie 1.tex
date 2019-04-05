@@ -5,6 +5,7 @@
 \usepackage[margin=3cm]{geometry}
 \usepackage{verbatim}
 \usepackage[francais]{babel}
+\usepackage{graphicx}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 
 \title{INFO-H303 - Projet - Partie 1}
@@ -18,17 +19,15 @@
 
 
 \section{Modèle entité-association}
-Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
-\iffalse
+
 \begin{figure}[hb]
 \begin{center}
 \includegraphics[scale=0.4]{image.png} 
 \end{center}
 \caption{Modèle entité-association}
 \end{figure}
-\fi 
-
+\
 \subsection*{Contraintes d'intégrité}
 
 - La \textit{position initiale} de la \textit{trottinette} doit être à Bruxelles.
@@ -43,10 +42,6 @@ Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
 - L'\textit{inspection} des trottinettes doit être effectué entre 22h et 7h du matin.
 
-- La \textit{Date de réparation} doit être supérieur à la \textit{date de dépot} de la \textit{plainte}.
-
-- La \textit{Date de mise en service} doit être inférieur à la \textit{date de dépot de painte}.
-
 - Une \textit{trottinette} ne peut être utilisé que par un \textit{utilisateur} à la fois.
 
 - Une \textit{trottinette} ne peut être réparé que par un \textit{technicien} à la fois.
@@ -55,12 +50,12 @@ Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
 - Une \textit{trottinette} ne peut pas être \textit{utilisé} et être en même temps en train de \textit{chargé} ou en train d'être \textit{réparé}.
 
-- La \textit{dateD'Intervention} doir être supérieur ou égale a la \textit{DateDeDépotDePlainte}.
+- La \textit{Date de réparation} doit être supérieur à la \textit{date de dépot de plainte}.
 
+- La \textit{Date de mise en service} doit être inférieur à la \textit{date de dépot de plainte}.
 
+- La \textit{Date d'intervention} doir être supérieur ou égale a la \textit{date de dépot de plainte}.
 
-\subsection*{Remarques}
-Exprimer et justi??fier des hypothèses sur le modèle
 
 \section{Modèle Relationnel}
 Trottinette(\underline{N\textsuperscript{o}Trottinette}, DateMiseService, N\textsuperscript{o}Modèle, Etat, Identifiant)
@@ -102,20 +97,6 @@ UtilisateurTechnicien(\underline{Identifiant, N\textsuperscript{o}Employé})
 \tab Identifiant référence Utilisateru.Identifient
 
 \tab N\textsuperscript{o}Employe référence Technicien.N\textsuperscript{o}Employé
-
-
-\subsection*{Remarques}
-Justifier les choix de modélisation
-
-Les deux modèles doivent servir de support aux requêtes suivantes :
-R1 : La liste et la localisation des trottinettes actuellement disponibles.
-R2 : La liste des utilisateurs ayant utilisé toutes les trottinettes qu'ils ont rechargées.
-R3 : La trottinette ayant eeffectué la plus grande distance.
-R4 : Les trottinettes ayant déjà fait l'objet d'au moins une dizaine de plaintes.
-R5 : Les utilisateurs ayant déjà réalisé au moins 10 trajets avec pour chaque utilisateur concerné : la durée moyenne de ses trajets en trottinette, le nombre total de trajets réalisés, le montant total dépensé en trajets (sans prise en compte de l'argent gagné par les recharges éventuelles de trottinettes).
-
-
-
 
 
 \end{document}
