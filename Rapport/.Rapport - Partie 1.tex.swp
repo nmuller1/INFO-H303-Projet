@@ -5,6 +5,7 @@
 \usepackage[margin=3cm]{geometry}
 \usepackage{verbatim}
 \usepackage[francais]{babel}
+\usepackage{graphicx}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 
 \title{INFO-H303 - Projet - Partie 1}
@@ -18,17 +19,15 @@
 
 
 \section{Modèle entité-association}
-Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
-\iffalse
+
 \begin{figure}[hb]
 \begin{center}
 \includegraphics[scale=0.4]{image.png} 
 \end{center}
 \caption{Modèle entité-association}
 \end{figure}
-\fi 
-
+\
 \subsection*{Contraintes d'intégrité}
 
 - La \textit{position initiale} de la \textit{trottinette} doit être à Bruxelles.
@@ -57,7 +56,6 @@ Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
 - La \textit{dateD'Intervention} doir être supérieur ou égale a la \textit{DateDeDépotDePlainte}.
 
--
 
 
 \subsection*{Remarques}
@@ -104,12 +102,6 @@ UtilisateurTechnicien(\underline{Identifiant, N\textsuperscript{o}Employé})
 
 \tab N\textsuperscript{o}Employe référence Technicien.N\textsuperscript{o}Employé
 
-
-
-
-
-\subsection*{Contraintes}
-[...]
 
 \subsection*{Remarques}
 Justifier les choix de modélisation
