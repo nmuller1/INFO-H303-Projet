@@ -59,9 +59,6 @@
 
 \section{Modèle Relationnel}
 Trottinette(\underline{N\textsuperscript{o}Trottinette}, DateMiseService, N\textsuperscript{o}Modèle, Etat, Identifiant)
-
-\tab Trottinette.DateMiseEnService <= Intervention.DateDeDépot
-
 \bigbreak
 Utilisateur(\underline{Identifiant, MotDePasse}, N\textsuperscript{o}Carte)
 \bigbreak
@@ -89,7 +86,6 @@ Recharge(\underline{Identifiant, N\textsuperscript{o}Trottinette, Date}, ChargeI
  
 \tab N\textsuperscript{o}Employé référence Technicien.N\textsuperscript{o}Trottinette
 
-\tab Intervention.DateRéparation >= Intervention.DateD2potPlainte
 \bigbreak
 TrottinetteUtilisateur(\underline{N\textsuperscript{o}Trottinette, Identifiant})
 
@@ -103,6 +99,9 @@ UtilisateurTechnicien(\underline{Identifiant, N\textsuperscript{o}Employé})
 
 \tab N\textsuperscript{o}Employe référence Technicien.N\textsuperscript{o}Employé
 
+\subsection*{Contraintes du modèle relationnel}
+Trottinette.DateMiseEnService <= Intervention.DateDeDépot
 
+Intervention.DateRéparation >= Intervention.DateD2potPlainte
 \end{document}
 difftime|Ops\.factor|Ops\.numeric_version|Ops\.ordered|Ops\.POSIXt|options|order|ordered|outer|packageEvent|packageHasNamespace|packageStartupMessage|package_version|packBits|pairlist|parent\.env|parent\.frame|parse|parseNamespaceFile|paste|paste0|path\.expand|path\.package|pi|pipe|pmatch|pmax|pmax\.int|pmin|pmin\.int|polyroot|Position|pos\.to\.env|pretty|prettyNum|print|print\.AsIs|print\.by|print\.condition|print\.connection|print\.data\.frame|print\.Date|print\.difftime|print\.DLLInfo|print\.DLLInfoList|print\.DLLRegisteredRoutines|print\.factor|print\.function|print\.hexmode|print\.libraryIQR|print\.listof|print\.NativeRoutineList|print\.noquote|print\.numeric_version|print\.octmode|print\.packageInfo|print\.POSIXct|print\.POSIXlt|print\.proc_time|print\.restart|print\.rle|print\.simple\.list|print\.srcfile|print\.srcref|print\.summaryDefault|print\.summary\.table|print\.table|print\.warnings|prmatrix|proc\.time|prod|prop\.table|psigamma|pushBack|pushBackLength|q|qr|qr\.coef|qr\.fitted|qr\.Q|qr\.qty|qr\.qy|qr\.R|qr\.resid|qr\.solve|qr\.X|quarters|quarters\.Date|quarters\.POSIXt|quit|quote|range|rank|rapply|raw|rawConnection|rawConnectionValue|rawShift|rawToBits|rawToChar|rbind|rbind\.data\.frame|rcond|Re|readBin|readChar|read\.dcf|readline|readLines|readRDS|readRenviron|real|Recall|Reduce|regexec|regexpr|reg\.finalizer|registerS3method|registerS3methods|regmatches|remove|removeCConverter|removeTaskCallback|rep|rep\.Date|rep\.factor|rep\.int|replace|replicate|rep\.numeric_version|rep\.POSIXct|rep\.POSIXlt|require|requireNamespace|restartDescription|restartFormals|retracemem|rev|R\.home|rle|rm|RNGkind|RNGversion|round|round\.Date|round\.POSIXt|row|rowMeans|rownames|row\.names|row\.names\.data\.frame|rowsum|rowsum\.data\.frame|rowSums|R_system_version|R\.version|R\.Vera
