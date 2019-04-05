@@ -16,9 +16,6 @@
 
 \renewcommand{\abstractname}{}
 
-\begin{abstract}
-Test
-\end{abstract}
 
 \section{Modèle entité-association}
 Insérer class-diagram ici (modélisant le projet et ses contraintes)
@@ -34,7 +31,31 @@ Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
 \subsection*{Contraintes d'intégrité}
 
-Doivent être exprimées en français ou anglais et utiliser les mêmes noms d'entités, d'associations ou d'attributs que dans le modèle conceptuel.
+- La \textit{position initiale} de la \textit{trottinette} doit être à Bruxelles.
+
+- La \textit{position finale} de la \textit{trottinette} doit être un numéro unique.
+
+- L'\textit{indentifiant} de chaque \textit{trottinette}, de chaque \textit{utilisateur} et de chaque \textit{technicien} doit etre un numéro unique.
+
+- Les \textit{trottinettes} ne doivent pas être tout à fait chargées pour être rechargées.
+
+- La \textit{recharge} doit être éffectué entre 22h et 7h du matin.
+
+- L'\textit{inspection} des trottinettes doit être effectué entre 22h et 7h du matin.
+
+- La \textit{Date de réparation} doit être supérieur à la \textit{date de dépot} de la \textit{plainte}.
+
+- La \textit{Date de mise en service} doit être inférieur à la \textit{date de dépot de painte}.
+
+- Une \textit{trottinette} ne peut être utilisé que par un \textit{utilisateur} à la fois.
+
+- Une \textit{trottinette} ne peut être réparé que par un \textit{technicien} à la fois.
+
+- Une \textit{trottinette} ne peut être rechargé que par un \textit{utilisateur qui recharge} à la fois.
+
+- Une \textit{trottinette} ne peut pas être \textit{utilisé} et être en même temps en train de \textit{chargé} ou en train d'être \textit{réparé}.
+
+
 
 \subsection*{Remarques}
 Exprimer et justi??fier des hypothèses sur le modèle
