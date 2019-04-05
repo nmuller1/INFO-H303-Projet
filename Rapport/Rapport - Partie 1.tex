@@ -59,6 +59,9 @@
 
 \section{Modèle Relationnel}
 Trottinette(\underline{N\textsuperscript{o}Trottinette}, DateMiseService, N\textsuperscript{o}Modèle, Etat, Identifiant)
+
+\tab Trottinette.DateMiseEnService <= Intervention.DateDeDépot
+
 \bigbreak
 Utilisateur(\underline{Identifiant, MotDePasse}, N\textsuperscript{o}Carte)
 \bigbreak
@@ -85,6 +88,8 @@ Recharge(\underline{Identifiant, N\textsuperscript{o}Trottinette, Date}, ChargeI
  \tab N\textsuperscript{o}Trottinette référence Trottinette.N\textsuperscript{o}Trottinette
  
 \tab N\textsuperscript{o}Employé référence Technicien.N\textsuperscript{o}Trottinette
+
+\tab Intervention.DateRéparation >= Intervention.DateD2potPlainte
 \bigbreak
 TrottinetteUtilisateur(\underline{N\textsuperscript{o}Trottinette, Identifiant})
 
