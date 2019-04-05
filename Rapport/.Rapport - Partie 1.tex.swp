@@ -64,7 +64,7 @@ Utilisateur(\underline{Identifiant, MotDePasse}, N\textsuperscript{o}Carte)
 \bigbreak
 Technicien(\underline{N\textsuperscript{o}Employé}, Nom, Prenom, N\textsuperscript{o}Téléphone, DateEmbauche
 \bigbreak
-Trajet (\underline{HeureDeVerrouillage, N\textsuperscript{o}Trottinette, Identifiant}, HeurVerouillage, PositionInitiale)
+Trajet (\underline{HeureDeVerrouillage, N\textsuperscript{o}Trottinette, Identifiant}, HeurVerouillage, PositionInitiale, PositionFinale)
 
 \tab N\textsuperscript{o}Trottinette référence Trottinette.N\textsuperscript{o}Trottinette
 
