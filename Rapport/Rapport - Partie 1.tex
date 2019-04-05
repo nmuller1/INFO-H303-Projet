@@ -55,6 +55,9 @@ Insérer class-diagram ici (modélisant le projet et ses contraintes)
 
 - Une \textit{trottinette} ne peut pas être \textit{utilisé} et être en même temps en train de \textit{chargé} ou en train d'être \textit{réparé}.
 
+- La \textit{dateD'Intervention} doir être supérieur ou égale a la \textit{DateDeDépotDePlainte}.
+
+-
 
 
 \subsection*{Remarques}
@@ -88,6 +91,19 @@ Recharge(\underline{Identifiant, N\textsuperscript{o}Trottinette, Date}, ChargeI
  \tab N\textsuperscript{o}Trottinette référence Trottinette.N\textsuperscript{o}Trottinette
  
 \tab N\textsuperscript{o}Employé référence Technicien.N\textsuperscript{o}Trottinette
+\bigbreak
+TrottinetteUtilisateur(\underline{N\textsuperscript{o}Trottinette, Identifiant})
+
+\tab N\textsuperscript{o}Trottinette référence Trottinette.N\textsuperscript{o}Trottinette
+
+\tab Identifiant référence Utilisateur.Identifiant
+\bigbreak
+UtilisateurTechnicien(\underline{Identifiant, N\textsuperscript{o}Employé})
+
+\tab Identifiant référence Utilisateru.Identifient
+
+\tab N\textsuperscript{o}Employe référence Technicien.N\textsuperscript{o}Employé
+
 
 
 
