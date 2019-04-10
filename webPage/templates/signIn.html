@@ -1,0 +1,20 @@
+<html>
+   <body style="background-color: f0f0f0" >
+      <DIV ALIGN="center">
+        <form action="">
+                <input type="radio" name="recharge" value="true"> Avec droit de recharge<br>
+                <input type="radio" name="recharge" value="false"> Sans droit de recharge<br>
+                </form>
+      <form action = "http://localhost:5000/result" method = "POST">
+         <p>Name <input type = "text" name = "firstName" placeholder = " Name " /></p>
+         <p>Phone number <input type="tel" name="phone" placeholder = " Phone Number " pattern="[0-9]{10}"/> </p>
+         <p>Adresse <input type = "text" name = "road" placeholder = " Road name"/>
+            <input type = "text" name = "roadNum" placeholder = " Road number "/>
+        </p>
+        <p><input type = "text" name = "codePostal" placeholder = " Code postale "/>
+            <input type = "text" name = "commune" placeholder = " Commune "/>
+        </p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+   </body>
+</html>
