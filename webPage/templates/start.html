@@ -1,11 +1,18 @@
 <html>
+
+    <head>
+            <title>lime 2.0</title>
+            </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
+        <form action = "http://localhost:5000/result" method = "POST">
+            <p>Username <input type = "text" name = "Name" placeholder = "Username" /></p>
+            <p>Password <input type = "text" name = "Password" placeholder = "Password"/></p>
+            <p><input type = "submit" value = "submit" /></p>
+            </form>
+        <p align="center">or</p>
         <form action = "http://localhost:5000/signIn" method = "POST">
             <p><input type = "submit" value = "S'inscrire" /></p>
             </form>
-        <form action = "http://localhost:5000/connection" method = "POST">
-            <p><input type = "submit" value = "Se connecter" /></p>
-        </form>
    </body>
 </html>
