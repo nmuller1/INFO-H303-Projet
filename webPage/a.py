@@ -17,4 +17,11 @@ def result():
       return render_template("result.html",result = result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+   try:
+      dbname=sys.argv[1]
+      user=sys.argv[2]
+   conn = psycopg2.connect("dbname="+dbname+" user="+user)
+   cur = conn.cursor()
+   app.run()   #host='0.0.0.0')
+   cur.close()
+   conn.close()
