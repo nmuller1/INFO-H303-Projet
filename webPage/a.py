@@ -16,7 +16,7 @@ def signIn():
 def result():
    if request.method == 'POST':
       result = request.form
-      cur.execute("SELECT * FROM user_ WHERE cardNum=%s",(result['CreditCardNum'],))
+      cur.execute("SELECT * FROM user WHERE cardNum=%s",(result['CreditCardNum'],))
       res = cur.fetchone()
       if res == None:      #if credit doesn't exist already
          cur.execute("SELECT max(id) from user_");
@@ -25,7 +25,7 @@ def result():
          newUsername = result['newUsername']
          newPassword = result['newPassword']
          CreditCardNum = result['CreditCardNum']
-         cur.execute("INSERT INTO user_ (id, pseudo,password, cardNum<) VALUES (%s, %s,%s,%s)",(new_ID, newUsername,newPassword, CreditCardNum))
+         cur.execute("INSERT INTO user (id, pseudo,password, cardNum<) VALUES (%s, %s,%s,%s)",(new_ID, newUsername,newPassword, CreditCardNum))
          conn.commit()
          if vendeur:
             firstName=result['firstName']
@@ -35,7 +35,7 @@ def result():
             roadNum=result['roadNum']
             codePostal=result['codePostal']
             commune=result['commune']
-            cur.execute("INSERT INTO seller (id,firstname,name,phone,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(new_ID,firstname,name,phone,road,roadNum,codePostal,commune))
+            cur.execute("INSERT INTO CHARGER_USER (id,firstname,name,phone,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(new_ID,firstname,name,phone,road,roadNum,codePostal,commune))
             conn.commit()
       return render_template("result.html",result = result)
 
