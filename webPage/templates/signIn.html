@@ -1,4 +1,7 @@
 <html>
+    <head>
+        <title>lime 2.0-signIn</title>
+        </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
       <form action = "http://localhost:5000/result" method = "POST">
@@ -6,8 +9,8 @@
          <p>Password <input type = "text" name = "newPassword" placeholder = "Password" /></p>
          <p>Credit card num. <input type = "text" name = "CreditCardNum" placeholder = "Credit card Num." /></p>
       <p>With charge up right ?</p>
-      <input type="button" name="vendeur" value="yes" onclick="chargUpRights()">
-      <input type="button" name="vendeur" value="no" onclick="noChargUpRights()"> <br>
+      <input type="button" name="vendeur" value="true" onclick="chargUpRights()">
+      <input type="button" name="vendeur" value="false" onclick="noChargUpRights()"> <br>
       <div id="chargeUpForm" style='display:none' >
             <p>First name <input type = "text" name = "firstName" placeholder = " First name " /></p>
             <p>Name <input type = "text" name = "name" placeholder = " Name " /></p>
