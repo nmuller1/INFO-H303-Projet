@@ -17,6 +17,3 @@ CREATE TABLE  CHARGER_USER  (
    codePostal    VARCHAR(255) NOT NULL,
    commune    VARCHAR(255) NOT NULL
 );
-
-SELECT * FROM user_;
-SELECT * FROM charger_user;
