@@ -1,1 +1,0 @@
-drop owned by loukas cascade;
