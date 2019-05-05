@@ -67,7 +67,6 @@ for elem in root:
     elem[2].text=noRiskElements[1]
     elem[5][0].text=noRiskElements[2]
     elem[5][2].text=noRiskElements[3]
-    print(elem[1].text,elem[2].text,elem[5][0].text,elem[5][2].text)
     insert +="INSERT INTO CHARGER_USER (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES "
     insert += "('"+elem[0].text+"','"+elem[2].text+"','"+elem[1].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"')" + ";\n"
 
@@ -111,7 +110,7 @@ for elem in dataList:
     elem = elem.split(",")
     insert +="INSERT INTO trips (scooter, userID, sourceX, sourceY, destinationX, destinationY, startTime, endtime) VALUES "
     insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"')" + ";\n"
-"""
+
 with open(output_file, 'w') as f :
     f.write(insert)
 
