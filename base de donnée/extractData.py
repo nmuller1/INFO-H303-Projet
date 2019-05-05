@@ -67,6 +67,7 @@ for elem in root:
     elem[2].text=noRiskElements[1]
     elem[5][0].text=noRiskElements[2]
     elem[5][2].text=noRiskElements[3]
+    print(elem[1].text,elem[2].text,elem[5][0].text,elem[5][2].text)
     insert +="INSERT INTO CHARGER_USER (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES "
     insert += "('"+elem[0].text+"','"+elem[2].text+"','"+elem[1].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"')" + ";\n"
 
