@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
+from operator import methodcaller
 output_file = "data.sql"
 insert = ""
-
+"""
 tree = ET.parse('data2019/anonyme_users.xml')  
 root = tree.getroot()
 for elem in root:
@@ -15,7 +16,7 @@ for elem in root:
     insert +="INSERT INTO mechanic (id, lastname, firstname,password, phoneNum, road, roadNum, codePostal, commune, hireDate, cardNum) VALUES "
     insert += "('"+elem[0].text+"','"+elem[1].text+"','"+elem[2].text+"','"+elem[3].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"','"+elem[6].text+"','"+elem[7].text+"')" + ";\n"
 
-
+"""
 tree = ET.parse('data2019/registeredUsers.xml')  
 root = tree.getroot()
 
@@ -26,5 +27,47 @@ for elem in root:
     insert +="INSERT INTO CHARGER_USER (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES "
     insert += "('"+elem[0].text+"','"+elem[2].text+"','"+elem[1].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"')" + ";\n"
 
+"""
+whole_file=""
+with open('data2019/reloads.csv', 'r') as f :
+    whole_file=f.read()
+dataList = whole_file.split("\n")[1:-1]
+
+for elem in dataList:
+    elem = elem.split(",")
+    insert +="INSERT INTO reloads (scooter, user_id, initialLoad, finalLoad, sourceX, sourceY, destinationX, destinationY, startTime, endtime) VALUES "
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"','"+elem[8]+"','"+elem[9]+"')" + ";\n"
+
+whole_file=""
+with open('data2019/reparations.csv', 'r') as f :
+    whole_file=f.read()
+dataList = whole_file.split("\n")[1:-1]
+
+for elem in dataList:
+    elem = elem.split(",")
+    insert +="INSERT INTO reparations (scooter, userID, mechanic, complainTime, repaireTime) VALUES "
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"')" + ";\n"
+
+
+whole_file=""
+with open('data2019/scooters.csv', 'r') as f :
+    whole_file=f.read()
+dataList = whole_file.split("\n")[1:-1]
+
+for elem in dataList:
+    elem = elem.split(";")
+    insert +="INSERT INTO scooters (numero, miseEnService, modele, plainte, charge) VALUES "
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"')" + ";\n"
+
+whole_file=""
+with open('data2019/trips.csv', 'r') as f :
+    whole_file=f.read()
+dataList = whole_file.split("\n")[1:-1]
+
+for elem in dataList:
+    elem = elem.split(",")
+    insert +="INSERT INTO trips (scooter, userID, sourceX, sourceY, destinationX, destinationY, startTime, endtime) VALUES "
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"')" + ";\n"
+"""
 with open(output_file, 'w') as f :
     f.write(insert)

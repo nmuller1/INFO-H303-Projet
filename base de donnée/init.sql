@@ -31,3 +31,43 @@ CREATE TABLE mechanic(
    hireDate    VARCHAR(64) NOT NULL,
    cardNum        VARCHAR(64) NOT NULL
 );
+
+CREATE TABLE reloads(
+   scooter    INT NOT NULL,
+   user_id      INT NOT NULL,
+   initialLoad  INT check( initialLoad between 0 and 4 ),
+   finalLoad    INT check( finalLoad between 0 and 4 ),
+   sourceX  DECIMAL NOT NULL,
+   sourceY DECIMAL NOT NULL,
+   destinationX DECIMAL NOT NULL,
+   destinationy DECIMAL NOT NULL,
+   startTime VARCHAR(64) NOT NULL,
+   endTime VARCHAR(64) NOT NULL
+);
+
+CREATE TABLE reparations(
+   scooter INT NOT NULL, 
+   userID  INT NOT NULL, 
+   mechanic DECIMAL NOT NULL, 
+   complainTime VARCHAR(64) NOT NULL, 
+   repaireTime VARCHAR(64) NOT NULL
+);
+
+CREATE TABLE scooters(
+   numero   INT PRIMARY KEY,
+   miseEnService  VARCHAR(64) NOT NULL,
+   modele  VARCHAR(64) NOT NULL,
+   plainte  BOOLEAN NOT NULL,
+   charge   INT check( charge between 0 and 4 )
+);
+
+CREATE TABLE trips(
+   scooter INT NOT NULL, 
+   userID  INT NOT NULL,
+   sourceX  DECIMAL NOT NULL,
+   sourceY DECIMAL NOT NULL,
+   destinationX DECIMAL NOT NULL,
+   destinationy DECIMAL NOT NULL,
+   startTime VARCHAR(64) NOT NULL,
+   endTime VARCHAR(64) NOT NULL
+);
