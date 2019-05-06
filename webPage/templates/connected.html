@@ -5,17 +5,14 @@
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
         <h1>you are now connected</h1>
-        <p>Name is: {{ result.get('Username') }}</p>
-        <p>Password is: {{ result.get('Password') }}</p>
-        <p></p>
         <form action = "http://localhost:5000/consultScooters" method = "POST">
             <p><input type = "submit" value = "consulter les trottinettes disponibles et leur localisation" /></p>
             </form>
-        <form action = "http://localhost:5000/signIn" method = "POST">
+        <form action = "http://localhost:5000/infoScooters" method = "POST">
             <p><input type = "submit" value = "consulter les informations associées à chaque trottinette: état de la batterie, plaintes actuelles." /></p>
             </form>
-        <form action = "http://localhost:5000/signIn" method = "POST">
-            <p><input type = "submit" value = "introduire une plainte (demande d'intervention)au sujet d'une trottinette" /></p>
+        <form action = "http://localhost:5000/introPlainte" method = "POST">
+            <p><input type = "submit" value = "introduire une plainte au sujet d'une trottinette" /></p>
             </form>
         <form action = "http://localhost:5000/consultTrips" method = "POST">
             <p><input type = "submit" value = "consulter l'historique des déplacement effectués" /></p>

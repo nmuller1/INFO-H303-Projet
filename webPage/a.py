@@ -62,6 +62,13 @@ def consultScooters():
    users = ['maateen', 'nabin', 'shadd']
    return render_template('consultScooters.html', users=users)
 
+@app.route('/infoScooters',methods = ['POST', 'GET'])
+def infoScooters():
+   return render_template('infoScooters.html')
+
+@app.route('/introPlainte',methods = ['POST', 'GET'])
+def introPlainte():
+   return render_template('introPlainte.html')
 
 @app.route('/consultTrips',methods = ['POST', 'GET'])
 def consultTrips():
