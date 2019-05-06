@@ -6,9 +6,11 @@
       <DIV ALIGN="center">
         <ul>
             {% for user in users %}
+            <li>
                 {% for elem in user %}
-                    <li>{{ user }}</li>
-                {% endfor %}  
+                    {{ elem }}, 
+                {% endfor %}
+            </li>  
             {% endfor %}
             </ul>
 </body>

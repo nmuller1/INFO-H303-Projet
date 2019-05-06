@@ -76,18 +76,27 @@ def consultScooters():
 
 @app.route('/infoScooters',methods = ['POST', 'GET'])
 def infoScooters():
-   return render_template('infoScooters.html')
+   cur.execute("SELECT numero, plainte, charge FROM scooters ")
+   trips = cur.fetchall()
+   return render_template('infoScooters.html', users=trips)
 
 @app.route('/introPlainte',methods = ['POST', 'GET'])
 def introPlainte():
    return render_template('introPlainte.html')
+
+@app.route('/infoPlainte',methods = ['POST', 'GET'])
+def infoPlainte():
+   result = request.form
+   cur.execute("UPDATE scooters set plainte=%s where numero=%s",("t",result['numTrottinette'],))
+   conn.commit()
+   return render_template('infoPlainte.html', result = result)
 
 @app.route('/consultTrips',methods = ['POST', 'GET'])
 def consultTrips():
    userID = session['userID']
    cur.execute("SELECT * FROM trips t WHERE t.userID=%s",(userID,))
    trips = cur.fetchall()
-   return render_template('consultScooters.html', users=trips)
+   return render_template('consultTrips.html', users=trips)
 
 @app.route('/mechanic',methods = ['POST', 'GET'])
 def mechanic():
