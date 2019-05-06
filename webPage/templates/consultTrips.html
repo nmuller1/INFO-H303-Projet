@@ -5,10 +5,11 @@
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
         <ul>
-            {% for trip in trips %}
-                <li>{{ trip }}</li>
+            {% for user in users %}
+                {% for elem in user %}
+                    <li>{{ user }}</li>
+                {% endfor %}  
             {% endfor %}
             </ul>
-
 </body>
 </html>

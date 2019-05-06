@@ -72,10 +72,10 @@ def introPlainte():
 
 @app.route('/consultTrips',methods = ['POST', 'GET'])
 def consultTrips():
-   users = ['maateen', 'nabin', 'shadd']
-   cur.execute("SELECT * FROM trips WHERE userID=%s",(session['userID'],))
-   trips = cur.fetchone()
-   return render_template('consultScooters.html', trips=trips)
+   userID = session['userID']
+   cur.execute("SELECT * FROM trips t WHERE t.userID=%s",(userID,))
+   trips = cur.fetchall()
+   return render_template('consultScooters.html', users=trips)
 
 
 if __name__ == '__main__':
