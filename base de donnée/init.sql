@@ -50,7 +50,8 @@ CREATE TABLE reparations(
    userID  INT NOT NULL, 
    mechanic DECIMAL NOT NULL, 
    complainTime VARCHAR(64) NOT NULL, 
-   repaireTime VARCHAR(64) NOT NULL
+   repaireTime VARCHAR(64) NOT NULL,
+   commentaire TEXT
 );
 
 CREATE TABLE scooters(
