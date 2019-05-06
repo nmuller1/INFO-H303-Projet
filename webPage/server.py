@@ -51,12 +51,15 @@ def connected():
       cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
       fetch = cur.fetchone()
       if fetch==None or Password != fetch[0]:
-         cur.execute("SELECT m.password, m.id FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
+         cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
          fetch = cur.fetchone()
          if fetch==None or Password != fetch[0]:
             flash("This user doesn't exist")
             return redirect('/')
-         return render_template("mechanic.html",result = result)
+         session['userID'] = str(fetch[1])
+         session['firstname'] = fetch[2]
+         session['lastname'] = fetch[3]
+         return render_template("mechanic.html", firstname= session['firstname'], lastname= session['lastname'])
       session['cardNum'] = cardNum
       session['Password'] = Password
       session['userID'] = fetch[1]
