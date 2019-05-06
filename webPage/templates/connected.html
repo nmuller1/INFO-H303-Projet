@@ -16,6 +16,24 @@
             </form>
         <form action = "http://localhost:5000/consultTrips" method = "POST">
             <p><input type = "submit" value = "consulter l'historique des déplacement effectués" /></p>
+        </form>
+        <div id="chargeUpForm" style='display:none' >
+            <form action = "http://localhost:5000/consultTrips" method = "POST">
+                <p><input type = "submit" value = "prendre une trottinette pour la recharger et la rapporter ensuite." /></p>
             </form>
+        <script>
+            function myFunc(hasCharger) {
+                return hasCharger
+            }
+            </script>
+
+        <script>
+            var myVar = myFunc({{hasCharger|tojson}})
+            if (myVar == "True") {
+                document.getElementById("chargeUpForm").style.display = "block";
+            }
+            </script>
+
+        </div>
    </body>
 </html>
