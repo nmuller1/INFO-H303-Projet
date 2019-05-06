@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, session
 import sys
 import psycopg2
 app = Flask(__name__)
@@ -42,6 +42,20 @@ def result():
             conn.commit()
       return render_template("result.html",result = result)
 
+@app.route('/connected',methods = ['POST', 'GET'])
+def connected():
+      result = request.form
+      cardNum = result['Username']
+      Password = result['Password']
+      cur.execute("SELECT u.password FROM user_ u WHERE u.cardNum = %s",(cardNum,))
+      fetch = cur.fetchone()
+      if fetch==None or Password != fetch[0]:
+         flash("This user doesn't exist")
+         return redirect('/')
+      return render_template("connected.html",result = result)
+
+
+
 if __name__ == '__main__':
    try:
       dbname=sys.argv[1]
@@ -51,6 +65,7 @@ if __name__ == '__main__':
       exit()
    conn = psycopg2.connect("dbname="+dbname+" user="+user)
    cur = conn.cursor()
+   app.secret_key = 'super secret key'
    app.run()   #host='0.0.0.0')
    cur.close()
    conn.close()
