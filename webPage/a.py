@@ -47,13 +47,28 @@ def connected():
       result = request.form
       cardNum = result['Username']
       Password = result['Password']
-      cur.execute("SELECT u.password FROM user_ u WHERE u.cardNum = %s",(cardNum,))
+      cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
       fetch = cur.fetchone()
       if fetch==None or Password != fetch[0]:
          flash("This user doesn't exist")
          return redirect('/')
+      session['cardNum'] = cardNum
+      session['Password'] = Password
+      session['userID'] = fetch[1]
       return render_template("connected.html",result = result)
 
+@app.route('/consultScooters',methods = ['POST', 'GET'])
+def consultScooters():
+   users = ['maateen', 'nabin', 'shadd']
+   return render_template('consultScooters.html', users=users)
+
+
+@app.route('/consultTrips',methods = ['POST', 'GET'])
+def consultTrips():
+   users = ['maateen', 'nabin', 'shadd']
+   cur.execute("SELECT * FROM trips WHERE userID=%s",(session['userID'],))
+   trips = cur.fetchone()
+   return render_template('consultScooters.html', trips=trips)
 
 
 if __name__ == '__main__':
