@@ -81,12 +81,13 @@ def connected():
 
 @app.route('/consultScooters',methods = ['POST', 'GET'])
 def consultScooters():
-   users = ['maateen', 'nabin', 'shadd']
-   return render_template('consultScooters.html', users=users)
+   cur.execute(" SELECT trips.scooter, trips.destinationX, trips.destinationy  FROM trips  JOIN (SELECT scooter, max(endTime) endTime FROM trips GROUP BY scooter) T ON trips.endTime=T.endTime ORDER BY trips.scooter ASC")
+   trips = cur.fetchall()
+   return render_template('consultScooters.html', users=trips)
 
 @app.route('/infoScooters',methods = ['POST', 'GET'])
 def infoScooters():
-   cur.execute("SELECT numero, plainte, charge FROM scooters ")
+   cur.execute("SELECT numero, plainte, charge FROM scooters ORDER BY numero ASC")
    trips = cur.fetchall()
    return render_template('infoScooters.html', users=trips)
 
@@ -111,7 +112,7 @@ def infoPlainte():
 @app.route('/consultTrips',methods = ['POST', 'GET'])
 def consultTrips():
    userID = session['userID']
-   cur.execute("SELECT * FROM trips t WHERE t.userID=%s",(userID,))
+   cur.execute("SELECT * FROM trips t WHERE t.userID=%s ORDER BY t.endTime ASC",(userID,))
    trips = cur.fetchall()
    return render_template('consultTrips.html', users=trips)
 

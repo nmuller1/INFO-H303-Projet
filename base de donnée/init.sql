@@ -40,7 +40,7 @@ CREATE TABLE reloads(
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
-   destinationy DECIMAL NOT NULL,
+   destinationy DECIMAL NOT NULL,            --changer destinationY
    startTime VARCHAR(64) NOT NULL,
    endTime VARCHAR(64) NOT NULL
 );
@@ -68,7 +68,7 @@ CREATE TABLE trips(
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
-   destinationy DECIMAL NOT NULL,
+   destinationy DECIMAL NOT NULL,            --changer destinationY
    startTime VARCHAR(64) NOT NULL,
    endTime VARCHAR(64) NOT NULL
 );

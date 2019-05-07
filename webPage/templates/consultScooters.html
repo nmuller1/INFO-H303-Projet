@@ -4,11 +4,25 @@
             </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
-        <ul>
-            {% for user in users %}
-                <li>{{ user }}</li>
-            {% endfor %}
-            </ul>
-
+            <table style="width:50%">
+                    <style>
+                    table, th, td {
+                        border: 1px solid black;
+                      }
+                      </style>
+                      
+                    <tr>
+                      <th>Numéro</th>
+                      <th>lieuX</th>
+                      <th>lieuY</th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        {% for elem in user %}
+                        <td>{{ elem }}</td>
+                        {% endfor %} 
+                    </tr>
+                    {% endfor %}
+                </table>
 </body>
 </html>
