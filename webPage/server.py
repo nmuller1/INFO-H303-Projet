@@ -4,6 +4,30 @@ import psycopg2
 import datetime
 app = Flask(__name__)
 
+def register(result):
+      cardNum = result['Username']
+      Password = result['Password']
+      cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
+      fetch = cur.fetchone()
+      if fetch==None or Password != fetch[0]:
+         cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
+         fetch = cur.fetchone()
+         if fetch==None or Password != fetch[0]:
+            flash("This user doesn't exist")
+            return redirect('/')
+         session['userID'] = str(fetch[1])
+         session['firstname'] = fetch[2]
+         session['lastname'] = fetch[3]
+         return "mechanic"
+      session['cardNum'] = cardNum
+      session['Password'] = Password
+      session['userID'] = fetch[1]
+      cur.execute("SELECT u.lastname FROM CHARGER_USER u WHERE u.id = %s",(session['userID'],))
+      fetch = cur.fetchone()
+      if fetch!=None:
+         return "userWithCharge"
+      return "user"
+
 @app.route('/')
 def student():
    return render_template('start.html')
@@ -47,26 +71,11 @@ def result():
 def connected():
       hasCharger = "False"
       result = request.form
-      cardNum = result['Username']
-      Password = result['Password']
-      cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
-      fetch = cur.fetchone()
-      if fetch==None or Password != fetch[0]:
-         cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
-         fetch = cur.fetchone()
-         if fetch==None or Password != fetch[0]:
-            flash("This user doesn't exist")
-            return redirect('/')
-         session['userID'] = str(fetch[1])
-         session['firstname'] = fetch[2]
-         session['lastname'] = fetch[3]
+      if session.has_key('userType'):
+         session['userType']=register(result)
+      if session['userType']=="mechanic":
          return render_template("mechanic.html", firstname= session['firstname'], lastname= session['lastname'])
-      session['cardNum'] = cardNum
-      session['Password'] = Password
-      session['userID'] = fetch[1]
-      cur.execute("SELECT u.lastname FROM CHARGER_USER u WHERE u.id = %s",(session['userID'],))
-      fetch = cur.fetchone()
-      if fetch!=None:
+      elif session['userType']=="userWithCharge":
          hasCharger = "True"
       return render_template("connected.html",result = result, hasCharger = hasCharger)
 
