@@ -48,9 +48,9 @@ CREATE TABLE reloads(
 CREATE TABLE reparations(
    scooter INT NOT NULL, 
    userID  INT NOT NULL, 
-   mechanic DECIMAL NOT NULL, 
+   mechanic DECIMAL, 
    complainTime VARCHAR(64) NOT NULL, 
-   repaireTime VARCHAR(64) NOT NULL,
+   repaireTime VARCHAR(64),
    commentaire TEXT
 );
 

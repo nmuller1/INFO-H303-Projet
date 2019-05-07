@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, session
 import sys
 import psycopg2
+import datetime
 app = Flask(__name__)
 
 @app.route('/')
@@ -92,6 +93,8 @@ def infoPlainte():
    scooter = cur.fetchone()
    if scooter != None and not scooter[0] :
       cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("t",numTrottinette,))
+      conn.commit()
+      cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s,%s)",(numTrottinette, session['userID'], datetime.datetime.now().isoformat()))
       conn.commit()
       result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
    return render_template('infoPlainte.html', result = result)
