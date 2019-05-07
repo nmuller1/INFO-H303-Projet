@@ -86,9 +86,14 @@ def introPlainte():
 
 @app.route('/infoPlainte',methods = ['POST', 'GET'])
 def infoPlainte():
-   result = request.form
-   cur.execute("UPDATE scooters set plainte=%s where numero=%s",("t",result['numTrottinette'],))
-   conn.commit()
+   numTrottinette = request.form['numTrottinette']
+   result = "Une demande a deja ete introduite ou la trottinette n'existe pas."
+   cur.execute("SELECT s.plainte FROM scooters s WHERE s.numero=%s",(numTrottinette,))
+   scooter = cur.fetchone()
+   if scooter != None and not scooter[0] :
+      cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("t",numTrottinette,))
+      conn.commit()
+      result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
    return render_template('infoPlainte.html', result = result)
 
 @app.route('/consultTrips',methods = ['POST', 'GET'])
