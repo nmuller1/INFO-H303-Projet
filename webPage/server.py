@@ -42,7 +42,7 @@ def result():
             commune=result['commune']
             cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(new_ID,firstName,name,phone,road,roadNum,codePostal,commune))
             conn.commit()
-      return render_template("result.html",result = result)
+      return render_template("loginFailed.html",result = "Congratulations ! Your has been created.")
 
 @app.route('/connected',methods = ['POST', 'GET'])
 def connected():
@@ -74,7 +74,7 @@ def connected():
       fetch = cur.fetchone()
       if fetch!=None:
          hasCharger = "True"
-         return render_template("connected.html",result = result, hasCharger = hasCharger)
+      return render_template("connected.html",result = result, hasCharger = hasCharger)
 
 @app.route('/consultScooters',methods = ['POST', 'GET'])
 def consultScooters():
