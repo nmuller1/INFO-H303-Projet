@@ -4,8 +4,15 @@
             </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
-          <h1>Mechanic</h2>
-            <p> {{ lastname }}, {{ firstname }} is connected.</p>
-
+            <table style="width:100%">
+                    <style>
+                    table, th, td {
+                        border: 1px solid black;
+                      }
+                      </style>
+                    {% for user in users %}
+                      <p>{{ user }}</p>
+                    {% endfor %}
+                </table>
 </body>
 </html>

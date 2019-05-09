@@ -63,7 +63,9 @@ def connected():
          session['userID'] = str(fetch[1])
          session['firstname'] = fetch[2]
          session['lastname'] = fetch[3]
-         return render_template("mechanic.html", firstname= session['firstname'], lastname= session['lastname'])
+         cur.execute(R2)
+         trips = cur.fetchall()
+         return render_template("mechanic.html", users=trips)
          
       if Password != fetch[0]:
          return render_template("loginFailed.html",result = "Wrong password, try again !")
@@ -115,7 +117,7 @@ def consultTrips():
 
 @app.route('/mechanic',methods = ['POST', 'GET'])
 def mechanic():
-   return render_template('mechanic.html')
+   return render_template('mechanic.html', users=trips)
 
 
 if __name__ == '__main__':
