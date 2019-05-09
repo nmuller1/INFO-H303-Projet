@@ -1,3 +1,4 @@
+from requetesSQL import *
 from flask import Flask, render_template, request, flash, redirect, session, url_for
 import sys
 import psycopg2
@@ -48,7 +49,6 @@ def result():
 def connected():
       hasCharger = "False"
       result = request.form
-
       cardNum = result['Username']
       Password = result['Password']
       cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
@@ -74,11 +74,11 @@ def connected():
       fetch = cur.fetchone()
       if fetch!=None:
          hasCharger = "True"
-      return render_template("connected.html",result = result, hasCharger = hasCharger)
+      return render_template("connected.html", hasCharger = hasCharger)
 
 @app.route('/consultScooters',methods = ['POST', 'GET'])
 def consultScooters():
-   cur.execute(" SELECT trips.scooter, trips.destinationX, trips.destinationy  FROM trips  JOIN (SELECT scooter, max(endTime) endTime FROM trips GROUP BY scooter) T ON trips.endTime=T.endTime ORDER BY trips.scooter ASC")
+   cur.execute(R1)
    trips = cur.fetchall()
    return render_template('consultScooters.html', users=trips)
 
