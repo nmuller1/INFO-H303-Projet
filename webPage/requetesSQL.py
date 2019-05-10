@@ -42,4 +42,9 @@ R4 = """SELECT scooter, COUNT(scooter)
         HAVING COUNT(scooter) > 9
         """
 
+R5 = """ SELECT userID, COUNT(userID)
+        FROM trips
+        GROUP BY userID
+        HAVING COUNT(userID) > 10
 
+"""
