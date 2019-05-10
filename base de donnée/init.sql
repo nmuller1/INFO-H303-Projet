@@ -40,17 +40,17 @@ CREATE TABLE reloads(
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
-   destinationy DECIMAL NOT NULL,            --changer destinationY
-   startTime VARCHAR(64) NOT NULL,
-   endTime VARCHAR(64) NOT NULL
+   destinationY DECIMAL NOT NULL,
+   startTime DATE NOT NULL,
+   endTime DATE
 );
 
 CREATE TABLE reparations(
    scooter INT NOT NULL, 
    userID  INT NOT NULL, 
    mechanic DECIMAL, 
-   complainTime VARCHAR(64) NOT NULL, 
-   repaireTime VARCHAR(64),
+   complainTime DATE NOT NULL, 
+   repaireTime DATE,
    commentaire TEXT
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE trips(
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
-   destinationy DECIMAL NOT NULL,            --changer destinationY
-   startTime VARCHAR(64) NOT NULL,
-   endTime VARCHAR(64) NOT NULL
+   destinationY DECIMAL NOT NULL,
+   startTime DATE NOT NULL,
+   endTime DATE
 );

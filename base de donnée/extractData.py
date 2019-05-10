@@ -77,8 +77,10 @@ dataList = whole_file.split("\n")[1:-1]
 
 for elem in dataList:
     elem = elem.split(",")
+    startTime = "to_timestamp('"+elem[8] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
+    endTime = "to_timestamp('"+elem[9] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
     insert +="INSERT INTO reloads (scooter, user_id, initialLoad, finalLoad, sourceX, sourceY, destinationX, destinationY, startTime, endtime) VALUES "
-    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"','"+elem[8]+"','"+elem[9]+"')" + ";\n"
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"','"+startTime+"','"+endTime+"')" + ";\n"
 
 whole_file=""
 with open('data2019/reparations.csv', 'r') as f :
@@ -87,6 +89,8 @@ dataList = whole_file.split("\n")[1:-1]
 
 for elem in dataList:
     elem = elem.split(",")
+    complainTime = "to_timestamp('"+elem[3] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
+    repaireTime = "to_timestamp('"+elem[4] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
     insert +="INSERT INTO reparations (scooter, userID, mechanic, complainTime, repaireTime) VALUES "
     insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"')" + ";\n"
 
@@ -109,7 +113,9 @@ dataList = whole_file.split("\n")[1:-1]
 for elem in dataList:
     elem = elem.split(",")
     insert +="INSERT INTO trips (scooter, userID, sourceX, sourceY, destinationX, destinationY, startTime, endtime) VALUES "
-    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+elem[6]+"','"+elem[7]+"')" + ";\n"
+    startTime = "to_timestamp('"+elem[6] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
+    endTime = "to_timestamp('"+elem[7] +"', 'YYYY-MM-DD\"T\"HH24:MI:SS.ff3\"Z\"')"
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','"+elem[5]+"','"+startTime+"','"+endTime+"')" + ";\n"
 
 with open(output_file, 'w') as f :
     f.write(insert)

@@ -1,4 +1,4 @@
-R1 = """SELECT trips.scooter, trips.destinationX, trips.destinationy  
+R1 = """SELECT trips.scooter, trips.destinationX, trips.destinationY  
         FROM trips  
         JOIN (SELECT scooter, max(endTime) endTime 
             FROM trips GROUP BY scooter) T 
@@ -30,7 +30,7 @@ R2 = """select user_id, count(scooter)              --pas finie
 
 R3 = """SELECT MAX(sub.sumDist) dist
     FROM (
-    SELECT t.scooter, SUM(SQRT(ABS(t.destinationX - t.sourceX)) + SQRT(ABS(t.destinationy - t.sourcey))) sumDist
+    SELECT t.scooter, SUM(SQRT(ABS(t.destinationX - t.sourceX)) + SQRT(ABS(t.destinationY - t.sourceY))) sumDist
     FROM trips t
     GROUP BY t.scooter
     ) sub
