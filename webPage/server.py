@@ -63,9 +63,7 @@ def connected():
          session['userID'] = str(fetch[1])
          session['firstname'] = fetch[2]
          session['lastname'] = fetch[3]
-         cur.execute(R5)
-         trips = cur.fetchall()
-         return render_template("mechanic.html", users=trips)
+         return render_template("mechanic.html")
          
       if Password != fetch[0]:
          return render_template("loginFailed.html",result = "Wrong password, try again !")
@@ -78,6 +76,7 @@ def connected():
          hasCharger = "True"
       return render_template("connected.html", hasCharger = hasCharger)
 
+#==============================USER PAGES=======================================================================
 @app.route('/consultScooters',methods = ['POST', 'GET'])
 def consultScooters():
    cur.execute(R1)
@@ -115,9 +114,35 @@ def consultTrips():
    trips = cur.fetchall()
    return render_template('consultTrips.html', users=trips)
 
+#========================================USER WITH CHARGE RIGHTS========================================================
+@app.route('/manageCharge',methods = ['POST', 'GET'])
+def manageCharge():
+   return render_template('manageCharge.html')
+
+#========================================MECHANIC PAGES=================================================================
 @app.route('/mechanic',methods = ['POST', 'GET'])
 def mechanic():
    return render_template('mechanic.html', users=trips)
+
+@app.route('/manageScooter',methods = ['POST', 'GET'])
+def manageScooter():
+   return render_template('manageScooter.html')
+
+@app.route('/actuScooter',methods = ['POST', 'GET'])
+def actuScooter():
+   return render_template('actuScooter.html')
+
+@app.route('/manageComplaints',methods = ['POST', 'GET'])
+def manageComplaints():
+   return render_template('manageComplaints.html')
+
+@app.route('/promoteUser',methods = ['POST', 'GET'])
+def promoteUser():
+   return render_template('promoteUser.html')
+
+@app.route('/printRequests',methods = ['POST', 'GET'])
+def printRequests():
+   return render_template('printRequests.html')
 
 
 if __name__ == '__main__':
