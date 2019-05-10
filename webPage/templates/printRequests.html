@@ -4,6 +4,19 @@
             </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
-        <h1>aficher les résultats des requêtes</h1>
+        <table style="width:100%">
+                <style>
+                table, th, td {
+                border: 1px solid black;
+                }
+                </style>
+        {% for user in users %}
+        <tr>
+            {% for elem in user %}
+            <td>{{ elem }}</td>
+            {% endfor %} 
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

@@ -69,6 +69,6 @@ CREATE TABLE trips(
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
    destinationY DECIMAL NOT NULL,
-   startTime Timestamp NOT NULL,
-   endTime Timestamp
+   startTime Timestamp NOT NULL,          
+   endTime Timestamp                --ajouter contrainte endTime>startTime
 );

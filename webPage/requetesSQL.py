@@ -42,9 +42,9 @@ R4 = """SELECT scooter, COUNT(scooter)
         HAVING COUNT(scooter) > 9
         """
 
-R5 = """ SELECT userID, COUNT(userID)
-        FROM trips
-        GROUP BY userID
-        HAVING COUNT(userID) > 10
-
-"""
+R5 = """ SELECT t.userID, AVG(t.endTime-t.startTime), COUNT(t.userID),
+        SUM(CASE when TO_TIMESTAMP(t.endTime-t.startTime, 'HH24:MI:SS')::TIME) < '01:00:00') THEN EXTRACT(minute FROM t.endTime-t.startTime)*0.15 end as 'okk')
+        FROM trips t
+        GROUP BY t.userID
+        HAVING COUNT(t.userID) > 10
+    """
