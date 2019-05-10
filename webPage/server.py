@@ -63,7 +63,7 @@ def connected():
          session['userID'] = str(fetch[1])
          session['firstname'] = fetch[2]
          session['lastname'] = fetch[3]
-         cur.execute(R2)
+         cur.execute(R3)
          trips = cur.fetchall()
          return render_template("mechanic.html", users=trips)
          
