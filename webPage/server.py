@@ -19,10 +19,10 @@ def signIn():
 def result():
    if request.method == 'POST':
       result = request.form
-      cur.execute("SELECT * FROM user_ WHERE cardNum=%s",(result['CreditCardNum'],))
+      cur.execute("SELECT * FROM nUser WHERE cardNum=%s",(result['CreditCardNum'],))
       res = cur.fetchone()
       if res == None:      #if credit doesn't exist already
-         cur.execute("SELECT max(id) from user_ LIMIT 1");
+         cur.execute("SELECT max(id) from nUser LIMIT 1");
          try:
             max_ID =  int(cur.fetchone()[0])
          except:
@@ -31,7 +31,7 @@ def result():
          newUsername = result['newUsername']
          newPassword = result['newPassword']
          CreditCardNum = result['CreditCardNum']
-         cur.execute("INSERT INTO user_ (id, pseudo,password, cardNum) VALUES (%s, %s,%s,%s)",(new_ID, newUsername,newPassword, CreditCardNum))
+         cur.execute("INSERT INTO nUser (id, pseudo,password, cardNum) VALUES (%s, %s,%s,%s)",(new_ID, newUsername,newPassword, CreditCardNum))
          conn.commit()
          if result['firstName'] != "":
             firstName=result['firstName']
@@ -51,7 +51,7 @@ def connected():
       result = request.form
       cardNum = result['Username']
       Password = result['Password']
-      cur.execute("SELECT u.password, u.id FROM user_ u WHERE u.cardNum = %s",(cardNum,))
+      cur.execute("SELECT u.password, u.id FROM nUser u WHERE u.cardNum = %s",(cardNum,))
       fetch = cur.fetchone()
       if fetch==None:
          cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))

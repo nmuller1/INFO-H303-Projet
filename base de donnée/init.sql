@@ -1,6 +1,6 @@
 set timezone='UTC';
 
-CREATE TABLE  user_ (
+CREATE TABLE  nUser (
    id          INT PRIMARY KEY ,
    pseudo      VARCHAR(20) ,
    password    VARCHAR(64) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE  user_ (
 );
 
 CREATE TABLE  CHARGER_USER  (
-   id        INT PRIMARY KEY REFERENCES user_(id) ON DELETE CASCADE,
+   id        INT PRIMARY KEY REFERENCES nUser(id) ON DELETE CASCADE,
    lastname  VARCHAR(20) NOT NULL,
    firstname VARCHAR(20) NOT NULL,
    phoneNum  VARCHAR(20) NOT NULL,
@@ -32,28 +32,6 @@ CREATE TABLE mechanic(
    cardNum        VARCHAR(64) NOT NULL
 );
 
-CREATE TABLE reloads(
-   scooter    INT NOT NULL,
-   user_id      INT NOT NULL,
-   initialLoad  INT check( initialLoad between 0 and 4 ),
-   finalLoad    INT check( finalLoad between 0 and 4 ),
-   sourceX  DECIMAL NOT NULL,
-   sourceY DECIMAL NOT NULL,
-   destinationX DECIMAL NOT NULL,
-   destinationY DECIMAL NOT NULL,
-   startTime DATE NOT NULL,
-   endTime DATE
-);
-
-CREATE TABLE reparations(
-   scooter INT NOT NULL, 
-   userID  INT NOT NULL, 
-   mechanic DECIMAL, 
-   complainTime DATE NOT NULL, 
-   repaireTime DATE,
-   commentaire TEXT
-);
-
 CREATE TABLE scooters(
    numero   INT PRIMARY KEY,
    miseEnService  VARCHAR(64) NOT NULL,
@@ -62,13 +40,35 @@ CREATE TABLE scooters(
    charge   INT check( charge between 0 and 4 )
 );
 
-CREATE TABLE trips(
-   scooter INT NOT NULL, 
-   userID  INT NOT NULL,
+CREATE TABLE reloads(
+   scooter    INT NOT NULL REFERENCES scooters(numero),
+   user_id      INT NOT NULL REFERENCES nUser(id),
+   initialLoad  INT check( initialLoad between 0 and 4 ),
+   finalLoad    INT check( finalLoad between 0 and 4 ),
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL NOT NULL,
    destinationY DECIMAL NOT NULL,
-   startTime DATE NOT NULL,
-   endTime DATE
+   startTime Timestamp NOT NULL,
+   endTime Timestamp
+);
+
+CREATE TABLE reparations(
+   scooter INT NOT NULL REFERENCES scooters(numero), 
+   userID  INT NOT NULL REFERENCES nUser(id),
+   mechanic DECIMAL, 
+   complainTime Timestamp NOT NULL, 
+   repaireTime Timestamp,
+   commentaire TEXT
+);
+
+CREATE TABLE trips(
+   scooter INT NOT NULL REFERENCES scooters(numero),
+   userID  INT NOT NULL REFERENCES nUser(id),
+   sourceX  DECIMAL NOT NULL,
+   sourceY DECIMAL NOT NULL,
+   destinationX DECIMAL NOT NULL,
+   destinationY DECIMAL NOT NULL,
+   startTime Timestamp NOT NULL,
+   endTime Timestamp
 );
