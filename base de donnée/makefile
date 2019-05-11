@@ -1,6 +1,6 @@
-loukas : init.sql data2019/data.sql
+loukas : init.sql data.sql
 		psql -d db -f init.sql
-		psql -d data -f data2019/data.sql
+		psql -d db -f data.sql
 
 clean:
 	rm data.sql

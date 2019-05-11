@@ -2,7 +2,6 @@ set timezone='UTC';
 
 CREATE TABLE  nUser (
    id          INT PRIMARY KEY ,
-   pseudo      VARCHAR(20) ,
    password    VARCHAR(64) NOT NULL,
    cardNum        VARCHAR(64) NOT NULL  UNIQUE
 );
@@ -18,6 +17,13 @@ CREATE TABLE  CHARGER_USER  (
    commune    VARCHAR(255) NOT NULL
 );
 
+CREATE TRIGGER cardNum_check
+BEFORE INSERT ON mechanic
+WHEN NEW.cardNum = (SELECT cardNum FROM nUser)
+BEGIN
+  SELECT RAISE(FAIL, "cardNum fail");
+END;
+
 CREATE TABLE mechanic(
    id    DECIMAL PRIMARY KEY ,
    firstname VARCHAR(20) NOT NULL,
@@ -29,7 +35,7 @@ CREATE TABLE mechanic(
    codePostal    VARCHAR(255) NOT NULL,
    commune    VARCHAR(255) NOT NULL,
    hireDate    VARCHAR(64) NOT NULL,
-   cardNum        VARCHAR(64) NOT NULL
+   cardNum        VARCHAR(64) NOT NULL UNIQUE --CHECK(NOT cardNum=nUser.cardNum)
 );
 
 CREATE TABLE scooters(
@@ -37,7 +43,8 @@ CREATE TABLE scooters(
    miseEnService  VARCHAR(64) NOT NULL,
    modele  VARCHAR(64) NOT NULL,
    plainte  BOOLEAN NOT NULL,
-   charge   INT check( charge between 0 and 4 )
+   charge   INT check( charge between 0 and 4 ),
+   disponible BOOLEAN
 );
 
 CREATE TABLE reloads(
@@ -50,7 +57,9 @@ CREATE TABLE reloads(
    destinationX DECIMAL NOT NULL,
    destinationY DECIMAL NOT NULL,
    startTime Timestamp NOT NULL,
-   endTime Timestamp
+   endTime Timestamp CHECK(endTime>startTime),
+   primary key (startTime, scooter, user_id)
+
 );
 
 CREATE TABLE reparations(
@@ -58,8 +67,9 @@ CREATE TABLE reparations(
    userID  INT NOT NULL REFERENCES nUser(id),
    mechanic DECIMAL, 
    complainTime Timestamp NOT NULL, 
-   repaireTime Timestamp,
-   commentaire TEXT
+   repaireTime Timestamp CHECK(repaireTime>complainTime),
+   commentaire TEXT,
+   primary key (complainTime, scooter, userID)
 );
 
 CREATE TABLE trips(
@@ -70,5 +80,6 @@ CREATE TABLE trips(
    destinationX DECIMAL NOT NULL,
    destinationY DECIMAL NOT NULL,
    startTime Timestamp NOT NULL,          
-   endTime Timestamp                --ajouter contrainte endTime>startTime
+   endTime Timestamp  CHECK(endTime>startTime),
+   primary key (startTime, scooter, userID)
 );

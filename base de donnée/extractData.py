@@ -36,8 +36,8 @@ def word_construct(word):
 tree = ET.parse('data2019/anonyme_users.xml')  
 root = tree.getroot()
 for elem in root:
-    insert +="INSERT INTO nUser (id, pseudo,password, cardNum) VALUES "
-    insert += "('"+elem[0].text+"','"+''+"','"+elem[1].text+"','"+elem[2].text+"')" + ";\n"
+    insert +="INSERT INTO nUser (id,password, cardNum) VALUES "
+    insert += "('"+elem[0].text+"','"+elem[1].text+"','"+elem[2].text+"')" + ";\n"
 #===================================INSERT MECANIC==========================================
 tree = ET.parse('data2019/mecaniciens.xml')  
 root = tree.getroot()
@@ -50,8 +50,8 @@ tree = ET.parse('data2019/registeredUsers.xml')
 root = tree.getroot()
 
 for elem in root:
-    insert +="INSERT INTO nUser (id, pseudo,password, cardNum) VALUES "
-    insert += "('"+elem[0].text+"','"+''+"','"+elem[3].text+"','"+elem[6].text+"')" + ";\n"
+    insert +="INSERT INTO nUser (id,password, cardNum) VALUES "
+    insert += "('"+elem[0].text+"','"+elem[3].text+"','"+elem[6].text+"')" + ";\n"
     riskElements=[elem[1].text,elem[2].text,elem[5][0].text,elem[5][2].text]
     noRiskElements=[]
     count=0

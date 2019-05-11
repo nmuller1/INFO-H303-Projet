@@ -31,7 +31,7 @@ def result():
          newUsername = result['newUsername']
          newPassword = result['newPassword']
          CreditCardNum = result['CreditCardNum']
-         cur.execute("INSERT INTO nUser (id, pseudo,password, cardNum) VALUES (%s, %s,%s,%s)",(new_ID, newUsername,newPassword, CreditCardNum))
+         cur.execute("INSERT INTO nUser (id,password, cardNum) VALUES (%s,%s,%s)",(new_ID,newPassword, CreditCardNum))
          conn.commit()
          if result['firstName'] != "":
             firstName=result['firstName']
