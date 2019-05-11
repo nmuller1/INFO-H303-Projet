@@ -17,13 +17,6 @@ CREATE TABLE  CHARGER_USER  (
    commune    VARCHAR(255) NOT NULL
 );
 
-CREATE TRIGGER cardNum_check
-BEFORE INSERT ON mechanic
-WHEN NEW.cardNum = (SELECT cardNum FROM nUser)
-BEGIN
-  SELECT RAISE(FAIL, "cardNum fail");
-END;
-
 CREATE TABLE mechanic(
    id    DECIMAL PRIMARY KEY ,
    firstname VARCHAR(20) NOT NULL,
