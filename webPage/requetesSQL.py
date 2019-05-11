@@ -10,27 +10,18 @@ R1 = """SELECT trips.scooter, trips.destinationX, trips.destinationY
         ORDER BY trips.scooter ASC
         """
 
-R2 = """select user_id, count(scooter)              --pas fini
+R2 ="""select c.userID --, count(c.scooter)
         from (
-        select r.user_id user_id, r.scooter scooter from reloads r
-        union all
-        select t.userID, t.scooter scooterC from trips t
+        select DISTINCT r.scooter scooter, r.user_id userID from reloads r
+        INTERSECT
+        select DISTINCT t.scooter, t.userID from trips t
         ) c
-        group by user_id
-        HAVING count(c.scooter)= scooter(c.scooterC)
-        ORDER BY user_id ASC
+        group by c.userID
+        HAVING count(c.scooter) = (SELECT COUNT(DISTINCT scooter) FROM reloads where user_id = c.userID)
+        ORDER BY c.userID ASC
     """
 
-"""SELECT  Amount, Date
-    FROM reloads
-    LEFT JOIN trips
-    ON Customers.ID = Orders.Customer_id
-    INTERSECT
-    SELECT  ID, NAME, Amount, Date
-    FROM Customers
-    RIGHT JOIN Orders
-    ON Customers.ID = Orders.Customer_id
-    """
+"""SELECT user_id, COUNT(DISTINCT scooter) FROM reloads GROUP by user_id --to see all scooter recharge by user"""
 
 R3 = """SELECT trips.scooter, SUM(SQRT(ABS(trips.destinationX - trips.sourceX)) + SQRT(ABS(trips.destinationY - trips.sourceY)))
     FROM trips
@@ -40,7 +31,6 @@ R3 = """SELECT trips.scooter, SUM(SQRT(ABS(trips.destinationX - trips.sourceX)) 
     SELECT t.scooter, SUM(SQRT(ABS(t.destinationX - t.sourceX)) + SQRT(ABS(t.destinationY - t.sourceY))) sumDist FROM trips t
     GROUP BY t.scooter
     ) sub )
-
 """
 
 R4 = """SELECT scooter, COUNT(scooter)

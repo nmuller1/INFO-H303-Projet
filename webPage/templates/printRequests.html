@@ -27,13 +27,16 @@
     </table>
 
     <h2>La liste desutilisateurs ayant utilisé toutes les trottinettes qu'ils ont rechargées</h2>
-    <table style="width:100%">
+    <table style="width:20%">
             <style>
             table, th, td {
             border: 1px solid black;
             }
             </style>
-    {% for user in R3 %}
+    <tr>
+            <th>userID</th>
+            </tr>
+    {% for user in R2 %}
     <tr>
         {% for elem in user %}
         <td>{{ elem }}</td>
@@ -49,6 +52,10 @@
         border: 1px solid black;
         }
         </style>
+    <tr>
+            <th>scooterID</th>
+            <th>Total distance traveled</th>
+            </tr>
 {% for user in R3 %}
 <tr>
     {% for elem in user %}
@@ -67,7 +74,7 @@
         </style>
     <tr>
             <th>scooterID</th>
-            <th>nbrOfComplains</th>
+            <th>Number of complains</th>
             </tr>
 {% for user in R4 %}
 <tr>
