@@ -17,64 +17,73 @@ def signIn():
 
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
+   """Function to register users account.
+   """
    if request.method == 'POST':
-      result = request.form
-      cur.execute("SELECT * FROM nUser WHERE cardNum=%s",(result['CreditCardNum'],))
-      res = cur.fetchone()
-      if res == None:      #if credit doesn't exist already
-         cur.execute("SELECT max(id) from nUser LIMIT 1");
-         try:
-            max_ID =  int(cur.fetchone()[0])
-         except:
-            max_ID = 0
-         new_ID = str(max_ID+1)
-         newUsername = result['newUsername']
-         newPassword = result['newPassword']
-         CreditCardNum = result['CreditCardNum']
-         cur.execute("INSERT INTO nUser (id,password, cardNum) VALUES (%s,%s,%s)",(new_ID,newPassword, CreditCardNum))
-         conn.commit()
-         if result['firstName'] != "":
-            firstName=result['firstName']
-            name=result['name']
-            phone=result['phone']
-            road=result['road']
-            roadNum=result['roadNum']
-            codePostal=result['codePostal']
-            commune=result['commune']
-            cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(new_ID,firstName,name,phone,road,roadNum,codePostal,commune))
+      if len(request.form)>=2:
+         result = request.form
+         cur.execute("SELECT * FROM nUser WHERE cardNum=%s",(result['CreditCardNum'],))
+         res = cur.fetchone()
+         if res == None:      #if credit card doesn't exist already
+            cur.execute("SELECT max(id) from nUser LIMIT 1")
+            try:
+               max_ID =  int(cur.fetchone()[0])
+            except:
+               max_ID = 0
+            new_ID = str(max_ID+1)
+            newPassword = result['newPassword']
+            CreditCardNum = result['CreditCardNum']
+            cur.execute("INSERT INTO nUser (id,password, cardNum) VALUES (%s,%s,%s)",(new_ID,newPassword, CreditCardNum))
             conn.commit()
-      return render_template("loginFailed.html",result = "Congratulations ! Your has been created.")
+            if len(request.form)>2:
+               if len(request.form)==9:
+                  firstName=result['firstName']
+                  name=result['name']
+                  phone=result['phone']
+                  road=result['road']
+                  roadNum=result['roadNum']
+                  codePostal=result['codePostal']
+                  commune=result['commune']
+                  cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(new_ID,firstName,name,phone,road,roadNum,codePostal,commune))
+                  conn.commit()
+               else :
+                  return render_template("loginFailed.html",result = "Please complete all the input fields")
+            return render_template("loginFailed.html",result = "Congratulations ! Your has been created.")
+         return render_template("loginFailed.html",result = "CardNum already exits !")
+      return render_template("loginFailed.html",result = "Please complete all the input fields")
 
 @app.route('/connected',methods = ['POST', 'GET'])
 def connected():
-      hasCharger = "False"
-      result = request.form
-      cardNum = result['Username']
-      Password = result['Password']
-      cur.execute("SELECT u.password, u.id FROM nUser u WHERE u.cardNum = %s",(cardNum,))
+   """Function to start session.
+   """
+   hasCharger = "False"
+   result = request.form
+   cardNum = result['Username']
+   Password = result['Password']
+   cur.execute("SELECT u.password, u.id FROM nUser u WHERE u.cardNum = %s",(cardNum,))
+   fetch = cur.fetchone()
+   if fetch==None:
+      cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
       fetch = cur.fetchone()
       if fetch==None:
-         cur.execute("SELECT m.password, m.id, m.firstname, m.lastname FROM mechanic m WHERE m.cardNum = %s",(cardNum,))
-         fetch = cur.fetchone()
-         if fetch==None:
-            return render_template("loginFailed.html",result = "User doesn't exist, try again !")
-         if Password != fetch[0]:
-            return render_template("loginFailed.html",result = "Wrong password, try again !")
-         session['userID'] = str(fetch[1])
-         session['firstname'] = fetch[2]
-         session['lastname'] = fetch[3]
-         return render_template("mechanic.html")
-         
+         return render_template("loginFailed.html",result = "User doesn't exist, try again !")
       if Password != fetch[0]:
          return render_template("loginFailed.html",result = "Wrong password, try again !")
-      session['cardNum'] = cardNum
-      session['Password'] = Password
-      session['userID'] = fetch[1]
-      cur.execute("SELECT u.lastname FROM CHARGER_USER u WHERE u.id = %s",(session['userID'],))
-      fetch = cur.fetchone()
-      if fetch!=None:
-         hasCharger = "True"
-      return render_template("connected.html", hasCharger = hasCharger)
+      session['userID'] = str(fetch[1])
+      session['firstname'] = fetch[2]
+      session['lastname'] = fetch[3]
+      return render_template("mechanic.html")
+      
+   if Password != fetch[0]:
+      return render_template("loginFailed.html",result = "Wrong password, try again !")
+   session['cardNum'] = cardNum
+   session['Password'] = Password
+   session['userID'] = fetch[1]
+   cur.execute("SELECT u.lastname FROM CHARGER_USER u WHERE u.id = %s",(session['userID'],))
+   fetch = cur.fetchone()
+   if fetch!=None:
+      hasCharger = "True"
+   return render_template("connected.html", hasCharger = hasCharger)
 
 #==============================USER PAGES=======================================================================
 @app.route('/consultScooters',methods = ['POST', 'GET'])

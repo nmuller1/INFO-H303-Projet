@@ -44,7 +44,7 @@ root = tree.getroot()
 
 for elem in root:
     insert +="INSERT INTO mechanic (id, lastname, firstname,password, phoneNum, road, roadNum, codePostal, commune, hireDate, cardNum) VALUES "
-    insert += "('"+elem[0].text+"','"+elem[1].text+"','"+elem[2].text+"','"+elem[3].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"','"+elem[6].text+"','"+elem[7].text+"')" + ";\n"
+    insert += "('"+elem[0].text+"','"+elem[1].text+"','"+elem[2].text+"','"+elem[3].text+"','"+elem[4].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"','"+elem[5][1].text+"','"+elem[5][0].text+"','"+elem[6].text+"','"+elem[7].text+"')" + ";\n"
 #===================================INSERT USERS WITH CHARGE RIGHTS==========================================
 tree = ET.parse('data2019/registeredUsers.xml')  
 root = tree.getroot()
@@ -66,7 +66,7 @@ for elem in root:
     elem[5][0].text=noRiskElements[2]
     elem[5][2].text=noRiskElements[3]
     insert +="INSERT INTO CHARGER_USER (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES "
-    insert += "('"+elem[0].text+"','"+elem[2].text+"','"+elem[1].text+"','"+elem[4].text+"','"+elem[5][0].text+"','"+elem[5][1].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"')" + ";\n"
+    insert += "('"+elem[0].text+"','"+elem[2].text+"','"+elem[1].text+"','"+elem[4].text+"','"+elem[5][2].text+"','"+elem[5][3].text+"','"+elem[5][1].text+"','"+elem[5][0].text+"')" + ";\n"
 #======================================INSERT SCOOTERS=========================================================
 whole_file=""
 with open('data2019/scooters.csv', 'r') as f :
@@ -75,8 +75,8 @@ dataList = whole_file.split("\n")[1:-1]
 
 for elem in dataList:
     elem = elem.split(";")
-    insert +="INSERT INTO scooters (numero, miseEnService, modele, plainte, charge) VALUES "
-    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"')" + ";\n"
+    insert +="INSERT INTO scooters (numero, miseEnService, modele, plainte, charge, disponible) VALUES "
+    insert += "('"+elem[0]+"','"+elem[1]+"','"+elem[2]+"','"+elem[3]+"','"+elem[4]+"','True')" + ";\n"
 #======================================INSERT RELOADS==========================================================
 whole_file=""
 with open('data2019/reloads.csv', 'r') as f :
