@@ -40,6 +40,7 @@ R4 = """SELECT scooter, COUNT(scooter)
         FROM reparations
         GROUP BY scooter
         HAVING COUNT(scooter) > 9
+        ORDER BY scooter ASC
         """
 
 R5 = """ SELECT t.userID, AVG(t.endTime-t.startTime), COUNT(t.userID),
@@ -51,4 +52,5 @@ R5 = """ SELECT t.userID, AVG(t.endTime-t.startTime), COUNT(t.userID),
         FROM trips t
         GROUP BY t.userID
         HAVING COUNT(t.userID) > 10
+        ORDER BY AVG(t.endTime-t.startTime) DESC
     """

@@ -142,9 +142,15 @@ def promoteUser():
 
 @app.route('/printRequests',methods = ['POST', 'GET'])
 def printRequests():
+   cur.execute(R1)
+   Re1 = cur.fetchall()
+   cur.execute(R3)
+   Re3 = cur.fetchall()
+   cur.execute(R4)
+   Re4 = cur.fetchall()
    cur.execute(R5)
-   trips = cur.fetchall()
-   return render_template('printRequests.html', users=trips)
+   Re5 = cur.fetchall()
+   return render_template('printRequests.html', R1=Re1, R3=Re3, R4=Re4, R5=Re5)
 
 
 if __name__ == '__main__':

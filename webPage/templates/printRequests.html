@@ -4,13 +4,20 @@
             </head>
    <body style="background-color: f0f0f0" >
       <DIV ALIGN="center">
+
+        <h2>La liste et lalocalisation des trottinettes actuellement disponibles</h2>
         <table style="width:100%">
                 <style>
                 table, th, td {
                 border: 1px solid black;
                 }
                 </style>
-        {% for user in users %}
+        <tr>
+                <th>scooterID</th>
+                <th>PositionX</th>
+                <th>PositionY</th>
+              </tr>
+        {% for user in R1 %}
         <tr>
             {% for elem in user %}
             <td>{{ elem }}</td>
@@ -18,5 +25,81 @@
         </tr>
         {% endfor %}
     </table>
+
+    <h2>La liste desutilisateurs ayant utilisé toutes les trottinettes qu'ils ont rechargées</h2>
+    <table style="width:100%">
+            <style>
+            table, th, td {
+            border: 1px solid black;
+            }
+            </style>
+    {% for user in R3 %}
+    <tr>
+        {% for elem in user %}
+        <td>{{ elem }}</td>
+        {% endfor %} 
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>La trotinnette ayant effectué la plus grande distance depuis sa mise en service</h2>
+<table style="width:100%">
+        <style>
+        table, th, td {
+        border: 1px solid black;
+        }
+        </style>
+{% for user in R3 %}
+<tr>
+    {% for elem in user %}
+    <td>{{ elem }}</td>
+    {% endfor %} 
+</tr>
+{% endfor %}
+</table>
+
+<h2>Les trottinettes ayant déjà fait l'objet d'au moins une dizaine de plaintes</h2>
+<table style="width:100%">
+        <style>
+        table, th, td {
+        border: 1px solid black;
+        }
+        </style>
+    <tr>
+            <th>scooterID</th>
+            <th>nbrOfComplains</th>
+            </tr>
+{% for user in R4 %}
+<tr>
+    {% for elem in user %}
+    <td>{{ elem }}</td>
+    {% endfor %} 
+</tr>
+{% endfor %}
+</table>
+
+<h2>Les utilisateurs ayant déjà réalisé au moins 10 trajets</h2>
+<table style="width:100%">
+        <style>
+        table, th, td {
+        border: 1px solid black;
+        }
+        </style>
+
+<tr>
+        <th>useID</th>
+        <th>Average Time</th>
+        <th>Number of trips</th>
+        <th>Total amount spent on journeys in euros</th>
+      </tr>
+{% for user in R5 %}
+<tr>
+    {% for elem in user %}
+    <td>{{ elem }}</td>
+    {% endfor %} 
+</tr>
+{% endfor %}
+</table>
+
 </body>
 </html>
