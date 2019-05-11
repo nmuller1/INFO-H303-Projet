@@ -102,7 +102,7 @@ def infoPlainte():
    if scooter != None and not scooter[0] :
       cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("t",numTrottinette,))
       conn.commit()
-      cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s,%s)",(numTrottinette, session['userID'], datetime.datetime.now().isoformat()))
+      cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'))",(numTrottinette, session['userID']))
       conn.commit()
       result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
    return render_template('infoPlainte.html', result = result)
