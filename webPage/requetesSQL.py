@@ -1,7 +1,11 @@
 R1 = """SELECT trips.scooter, trips.destinationX, trips.destinationY  
         FROM trips  
-        JOIN (SELECT scooter, max(endTime) endTime 
-            FROM trips GROUP BY scooter) T 
+        JOIN ((SELECT scooter, max(endTime) endTime 
+            FROM trips GROUP BY scooter) t1
+            INNER JOIN
+            (SELECT numero FROM scooters WHERE disponible = 't') t2
+            ON (t1.scooter = t2.numero)
+            ) T 
         ON trips.endTime=T.endTime 
         ORDER BY trips.scooter ASC
         """
@@ -28,12 +32,15 @@ R2 = """select user_id, count(scooter)              --pas fini
     ON Customers.ID = Orders.Customer_id
     """
 
-R3 = """SELECT MAX(sub.sumDist) dist
-    FROM (
-    SELECT t.scooter, SUM(SQRT(ABS(t.destinationX - t.sourceX)) + SQRT(ABS(t.destinationY - t.sourceY))) sumDist
-    FROM trips t
+R3 = """SELECT trips.scooter, SUM(SQRT(ABS(trips.destinationX - trips.sourceX)) + SQRT(ABS(trips.destinationY - trips.sourceY)))
+    FROM trips
+    GROUP BY trips.scooter
+    HAVING SUM(SQRT(ABS(trips.destinationX - trips.sourceX)) + SQRT(ABS(trips.destinationY - trips.sourceY)))  = (
+    SELECT MAX(sub.sumDist) maxDist FROM ( 
+    SELECT t.scooter, SUM(SQRT(ABS(t.destinationX - t.sourceX)) + SQRT(ABS(t.destinationY - t.sourceY))) sumDist FROM trips t
     GROUP BY t.scooter
-    ) sub
+    ) sub )
+
 """
 
 R4 = """SELECT scooter, COUNT(scooter)
