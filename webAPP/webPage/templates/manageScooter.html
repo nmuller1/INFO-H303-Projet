@@ -1,0 +1,21 @@
+<html>
+    <head>
+            <title>lime 2.0</title>
+            </head>
+   <body style="background-color: f0f0f0" >
+      <DIV ALIGN="center">
+        <h1>inserer/supprimer une trottinette dans le systeme</h1>
+            <p>Inserer une trottinette</p>
+            <form action = "http://localhost:5000/introScooter" method = "POST">
+                <p>Modele de trottinette <input type = "text" name = "modeleTrottinette" placeholder = "modeleTrottinette" /></p>
+                <p><input type = "submit" value = "Submit" /></p>
+            </form>
+            <p ALIGN = "center">ou</p>
+            <p>Supprimer une trottinette</p>
+            <form action = "http://localhost:5000/deleteScooter" method = "POST">
+                <p>Numero de trottinette <input type = "text" name = "numTrottinette" placeholder = "numTrottinette" /></p>
+                <p><input type = "submit" value = "Submit" /></p>
+            </form>
+</body>
+</html>
+

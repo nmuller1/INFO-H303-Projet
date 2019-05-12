@@ -1,0 +1,22 @@
+<html>
+    <head>
+            <title>lime 2.0</title>
+            </head>
+   <body style="background-color: f0f0f0" >
+      <DIV ALIGN="center">
+        <h1>faire evoluer un utilisateur lambda en utilisateur avec droit de recharge des trottinettes</h1>
+        <form action = "http://localhost:5000/requetePromoteUser" method = "POST">
+            <p>UserID <input type = "UserID" name = "UserID" placeholder = "UserID" /></p>
+            <p>First name <input type = "text" name = "firstName" placeholder = " First name " /></p>
+            <p>Name <input type = "text" name = "name" placeholder = " Name " /></p>
+            <p>Phone number <input type="tel" name="phone" placeholder = " Phone Number " pattern="[0-9]{10}"/> </p>
+            <p>Adresse <input type = "text" name = "road" placeholder = " Road name"/>
+               <input type = "text" name = "roadNum" placeholder = " Road number "/>
+         </p>
+         <p><input type = "text" name = "codePostal" placeholder = " Code postale "/>
+               <input type = "text" name = "commune" placeholder = " Commune "/>
+         </p>
+                <p><input type = "submit" value = "Submit" /></p>
+            </form>
+</body>
+</html>

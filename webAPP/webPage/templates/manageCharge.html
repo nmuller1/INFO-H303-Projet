@@ -1,0 +1,23 @@
+<html>
+    <head>
+            <title>lime 2.0</title>
+            </head>
+   <body style="background-color: f0f0f0" >
+      <DIV ALIGN="center">
+        <h1>Charger une trottinette</h1>
+        <p>Prendre une trottinette pour la recharger</p>
+        <form action = "http://localhost:5000/loadingScooter" method = "POST">
+        	<p>numTrottinette <input type = "numTrottinette" name = "numTrottinette" placeholder = "numTrottinette" /></p>
+            <p><input type = "submit" value = "Submit" /></p>
+            </form>
+        <p ALIGN = "center">ou</p>
+        <p>Remettre une trottinette apres chargement</p>
+        <form action = "http://localhost:5000/loadedScooter" method = "POST">
+        	<p>numTrottinette <input type = "numTrottinette" name = "numTrottinette" placeholder = "numTrottinette" /></p>
+        	<p>Veuillez entrer les coordonnees de l'endroit ou vous l'avez deposee :</p>
+        	<p><input type = "destinationX" name = "destinationX" placeholder = "destinationX" /></p>
+        	<p><input type = "destinationY" name = "destinationY" placeholder = "destinationY" /></p>
+            <p><input type = "submit" value = "Submit" /></p>
+            </form>
+</body>
+</html>

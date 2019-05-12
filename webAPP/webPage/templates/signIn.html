@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>lime 2.0-signIn</title>
+        </head>
+   <body style="background-color: f0f0f0" >
+      <DIV ALIGN="center">
+      <form action = "http://localhost:5000/result" method = "POST">
+        <p>Credit card num. <input type = "text" name = "CreditCardNum" placeholder = "Credit card Num." /></p>
+        <p>Password <input type = "text" name = "newPassword" placeholder = "Password" /></p>
+      <p>With charge up right ?</p>
+      <input type="button" name="charger" value="Yes" onclick="chargUpRights()">
+      <input type="button" name="charger" value="No" onclick="noChargUpRights()"> <br>
+      <div id="chargeUpForm" style='display:none' >
+            <p>First name <input type = "text" name = "firstName" placeholder = " First name " /></p>
+            <p>Name <input type = "text" name = "name" placeholder = " Name " /></p>
+            <p>Phone number <input type="tel" name="phone" placeholder = " Phone Number " pattern="[0-9]{10}"/> </p>
+            <p>Adresse <input type = "text" name = "road" placeholder = " Road name"/>
+               <input type = "text" name = "roadNum" placeholder = " Road number "/>
+         </p>
+         <p><input type = "text" name = "codePostal" placeholder = " Code postale "/>
+               <input type = "text" name = "commune" placeholder = " Commune "/>
+         </p>
+      </div>
+      <p><input type = "submit" value = "submit" /></p>
+   </form>
+   </body>
+         
+<script>
+      function chargUpRights() {
+        var x = document.getElementById("chargeUpForm");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        }
+      }
+      </script>
+<script>
+      function noChargUpRights() {
+        var x = document.getElementById("chargeUpForm");
+        if (x.style.display != "none") {
+          x.style.display = "none";
+        }
+      }
+      </script>
+
+</html>
