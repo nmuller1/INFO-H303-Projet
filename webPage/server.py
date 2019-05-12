@@ -114,7 +114,7 @@ def infoPlainte():
       cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'))",(numTrottinette, session['userID']))
       conn.commit()
       result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
-   return render_template('infoPlainte.html', result = result)
+   return render_template('printMessage.html', result = result)
 
 @app.route('/consultTrips',methods = ['POST', 'GET'])
 def consultTrips():
@@ -131,19 +131,52 @@ def manageCharge():
 #========================================MECHANIC PAGES=================================================================
 @app.route('/mechanic',methods = ['POST', 'GET'])
 def mechanic():
-   return render_template('mechanic.html', users=trips)
+    return render_template('mechanic.html', users=trips)
 
 @app.route('/manageScooter',methods = ['POST', 'GET'])
 def manageScooter():
-   return render_template('manageScooter.html')
+    return render_template('manageScooter.html')
+
+@app.route('/introScooter',methods = ['POST', 'GET'])
+def introScooter():
+    modeleTrottinette = request.form['modeleTrottinette']
+    cur.execute("SELECT MAX(s.numero) FROM scooters s")
+    numTrottinette = cur.fetchone()+1
+    cur.execute("INSERT INTO scooters(numero,miseEnService,modele,plainte,charge,disponible) VALUES (%s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'),%s,%s,%s,%s)",(numTrottinette, modeleTrottinette,"f",4,"t"))
+    conn.commit()
+    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete ajoutee au systeme.''
+    return render_template('printMessage.html', result = result)
+
+@app.route('/deleteScooter',methods = ['POST', 'GET'])
+def deleteScooter():
+    numTrottinette = request.form['numTrottinette']
+    cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
+    conn.commit()
+    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.''
+    return render_template('printMessage.html', result = result)
 
 @app.route('/actuScooter',methods = ['POST', 'GET'])
 def actuScooter():
-   return render_template('actuScooter.html')
+    return render_template('actuScooter.html')
 
 @app.route('/manageComplaints',methods = ['POST', 'GET'])
 def manageComplaints():
-   return render_template('manageComplaints.html')
+    return render_template('manageComplaints.html')
+
+@app.route('/scooterRepaired',methods = ['POST', 'GET'])
+def scooterRepaired():
+    numTrottinette = request.form['numTrottinette']
+    commentaire= request.form['commentaire']
+    result = "Aucune plainte n'a ete introduite pour cette trottinette."
+    cur.execute("SELECT s.plainte FROM reparations s WHERE s.scooter=%s AND s.repaireTime IS NULL",(numTrottinette,))
+    plainte = cur.fetchone()
+    if plainte != None :
+        cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("f",numTrottinette,))
+        conn.commit()
+        cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic= %s,commentaire=%s",(session['userID'],commentaire,))
+        conn.commit()
+        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.''
+        return render_template('printMessage.html', result = result)
 
 @app.route('/promoteUser',methods = ['POST', 'GET'])
 def promoteUser():

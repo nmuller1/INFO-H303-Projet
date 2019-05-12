@@ -58,7 +58,7 @@ CREATE TABLE reloads(
 CREATE TABLE reparations(
    scooter INT NOT NULL REFERENCES scooters(numero), 
    userID  INT NOT NULL REFERENCES nUser(id),
-   mechanic DECIMAL, 
+   mechanic DECIMAL REFERENCES mechanic(id), 
    complainTime Timestamp NOT NULL, 
    repaireTime Timestamp CHECK(repaireTime>complainTime),
    commentaire TEXT,
