@@ -136,13 +136,15 @@ def loadingScooter():
     cur.execute("SELECT s.numero FROM scooters s WHERE s.numero=%s AND s.disponible=%s",(numTrottinette,"t"))
     scooter = cur.fetchone()
     if scooter != None:
-        cur.execute("SELECT t.destinationX,t.destinationY FROM trips t WHERE t.scooter=%s AND t.endTime >= all ( SELECT endTime FROM trips WHERE scooter=%s",(numTrottinette,numTrottinette,))
-        sourceX,sourceY=fetchall()
-        cur.execute("SELECT s.charge FROM scooters s WHERE s.numero=%s",(numTrottinette))
+        cur.execute("SELECT trips.destinationX, trips.destinationY FROM trips  JOIN (SELECT max(endTime) endTime FROM trips WHERE scooter=%s) t1 ON trips.endTime=t1.endTime", (scooter,))
+        res=cur.fetchone()
+        sourceX = res[0]
+        sourceY = res[1]
+        cur.execute("SELECT s.charge FROM scooters s WHERE s.numero=%s",(numTrottinette,))
         initialLoad=cur.fetchone()
-        cur.execute("INSERT INTO reloads(scooter,user_id,initialLoad,finalLoad,sourceX,sourceY,destinationX,destinationY,startTime,endTime) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'),%s)",(numTrottinette,session['userID'],initialLoad,NULL,sourceX,sourceY,NULL,NULL,NULL,))
+        cur.execute("INSERT INTO reloads(scooter,user_id,initialLoad,sourceX,sourceY,startTime) VALUES (%s,%s,%s,%s,%s,to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'))",(numTrottinette,session['userID'],initialLoad,sourceX,sourceY,))
         conn.commit()
-        cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("f",numTrottinette,))
+        cur.execute("UPDATE scooters SET disponible=%s WHERE numero=%s",("f",numTrottinette,))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' est en cours de chargement.'
     return render_template('printMessage.html', result = result)
@@ -154,12 +156,12 @@ def loadedScooter():
     destinationX=form['destinationX']
     destinationY=form['destinationY']
     result = "La trottinette numero: "  + numTrottinette + " n'est pas en chargement."
-    cur.execute("SELECT scooter FROM reloads WHERE scooter=%s AND endTime IS NULL AND userID =%s",(numTrottinette,session['userID']))
+    cur.execute("SELECT reloads.scooter FROM reloads WHERE scooter=%s AND reloads.endTime IS NULL AND reloads.user_id =%s",(numTrottinette,session['userID'], ))
     scooter = cur.fetchone()
     if scooter != None:
-        cur.execute("UPDATE reloads SET finalLoad=%s,destinationX=%s,destinationY=%s,endTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\') WHERE scooter=%s AND endTime IS NULL",(4,numTrottinette,destinationX,destinationY))
+        cur.execute("UPDATE reloads SET finalLoad=4,destinationX=%s,destinationY=%s,endTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\') WHERE scooter=%s AND endTime IS NULL",(destinationX,destinationY,numTrottinette,))
         conn.commit()
-        cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("t",numTrottinette,))
+        cur.execute("UPDATE scooters SET disponible=%s WHERE numero=%s",("t",numTrottinette,))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete remise en service.'
     return render_template('printMessage.html', result = result)
