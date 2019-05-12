@@ -144,7 +144,7 @@ def introScooter():
     numTrottinette = cur.fetchone()+1
     cur.execute("INSERT INTO scooters(numero,miseEnService,modele,plainte,charge,disponible) VALUES (%s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'),%s,%s,%s,%s)",(numTrottinette, modeleTrottinette,"f",4,"t"))
     conn.commit()
-    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete ajoutee au systeme.''
+    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete ajoutee au systeme.'
     return render_template('printMessage.html', result = result)
 
 @app.route('/deleteScooter',methods = ['POST', 'GET'])
@@ -152,7 +152,7 @@ def deleteScooter():
     numTrottinette = request.form['numTrottinette']
     cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
     conn.commit()
-    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.''
+    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
     return render_template('printMessage.html', result = result)
 
 @app.route('/actuScooter',methods = ['POST', 'GET'])
@@ -175,7 +175,7 @@ def scooterRepaired():
         conn.commit()
         cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic= %s,commentaire=%s",(session['userID'],commentaire,))
         conn.commit()
-        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.''
+        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.'
         return render_template('printMessage.html', result = result)
 
 @app.route('/promoteUser',methods = ['POST', 'GET'])
