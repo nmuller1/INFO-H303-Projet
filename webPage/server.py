@@ -113,8 +113,6 @@ def infoPlainte():
       conn.commit()
       cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'))",(numTrottinette, session['userID']))
       conn.commit()
-      cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("f",numTrottinette,))
-      conn.commit()
       result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
    return render_template('printMessage.html', result = result)
 
@@ -135,7 +133,7 @@ def loadingScooter():
     form = request.form
     numTrottinette = form['numTrottinette']
     result = "La trottinette numero: "  + numTrottinette + " n'existe pas ou n'est pas disponible."
-    cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s AND s.disponible=%s",(numTrottinette,"t"))
+    cur.execute("SELECT s.numero FROM scooters s WHERE s.numero=%s AND s.disponible=%s",(numTrottinette,"t"))
     scooter = cur.fetchone()
     if scooter != None:
         cur.execute("SELECT t.destinationX,t.destinationY FROM trips t WHERE t.scooter=%s AND t.endTime >= all ( SELECT endTime FROM trips WHERE scooter=%s",(numTrottinette,numTrottinette,))
@@ -180,7 +178,8 @@ def manageScooter():
 def introScooter():
     modeleTrottinette = request.form['modeleTrottinette']
     cur.execute("SELECT MAX(s.numero) FROM scooters s")
-    numTrottinette = cur.fetchone()+1
+    numTrottinette=int(cur.fetchone()[0])
+    numTrottinette = str(numTrottinette+1)
     cur.execute("INSERT INTO scooters(numero,miseEnService,modele,plainte,charge,disponible) VALUES (%s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'),%s,%s,%s,%s)",(numTrottinette, modeleTrottinette,"f",4,"t"))
     conn.commit()
     result = 'La trottinette numero: '  + numTrottinette + ' a bien ete ajoutee au systeme.'
@@ -190,15 +189,12 @@ def introScooter():
 def deleteScooter():
     numTrottinette = request.form['numTrottinette']
     result = "La trottinette numero: "  + numTrottinette + " n'existe pas."
-    cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s",(numTrottinette,))
+    cur.execute("SELECT s.numero FROM scooters s WHERE s.numero=%s",(numTrottinette,))
     scooter = cur.fetchone()
     if scooter != None:
-        cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
+        cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette,))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
-    cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
-    conn.commit()
-    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
     return render_template('printMessage.html', result = result)
 
 @app.route('/actuScooter',methods = ['POST', 'GET'])
@@ -219,7 +215,7 @@ def scooterRepaired():
     if plainte != None :
         cur.execute("UPDATE scooters SET plainte=%s,disponible=%s WHERE numero=%s",("f","t",numTrottinette,))
         conn.commit()
-        cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic=%s,commentaire=%s WHERE s.scooter=%s AND s.repaireTime IS NULL",(session['userID'],commentaire,numTrottinette))
+        cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic=%s,commentaire=%s WHERE scooter=%s AND repaireTime IS NULL",(session['userID'],commentaire,numTrottinette,))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.'
         return render_template('printMessage.html', result = result)
@@ -231,9 +227,9 @@ def promoteUser():
 @app.route('/requetePromoteUser',methods = ['POST', 'GET'])
 def requetePromoteUser():
     form = request.form
-    userID = form['userID']
+    userID = form['UserID']
     result="L'utilisateur dispose deja du droit de recharge ou n'existe pas."
-    cur.execute("SELECT s.id FROM nUser s WHERE s.id=%s AND s.id not in ( SELECT id FROM CHARGER_USER)",(userID))
+    cur.execute("SELECT s.id FROM nUser s WHERE s.id=%s AND s.id not in ( SELECT id FROM CHARGER_USER)",(userID,))
     res = cur.fetchone()
     if res != None :
         result = "L'utilisateur : "+ userID + " dipose maintenant des droits de recharge."
@@ -244,7 +240,7 @@ def requetePromoteUser():
         roadNum=form['roadNum']
         codePostal=form['codePostal']
         commune=form['commune']
-        cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(userID,firstName,name,phone,road,roadNum,codePostal,commune))
+        cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(userID,firstName,name,phone,road,roadNum,codePostal,commune,))
         conn.commit()
     return render_template('printMessage.html', result=result)
 
