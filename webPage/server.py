@@ -150,7 +150,6 @@ def introScooter():
 @app.route('/deleteScooter',methods = ['POST', 'GET'])
 def deleteScooter():
     numTrottinette = request.form['numTrottinette']
-<<<<<<< HEAD
     result = "La trottinette numero: '  + numTrottinette + ' n'existe pas."
     cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s",(numTrottinette,))
     scooter = cur.fetchone()
@@ -158,11 +157,9 @@ def deleteScooter():
         cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
-=======
     cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
     conn.commit()
     result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
->>>>>>> 4917af864e964a65861cdfc5a337ae52fe355b38
     return render_template('printMessage.html', result = result)
 
 @app.route('/actuScooter',methods = ['POST', 'GET'])
