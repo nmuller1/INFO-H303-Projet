@@ -37,7 +37,7 @@ CREATE TABLE scooters(
    modele  VARCHAR(64) NOT NULL,
    plainte  BOOLEAN NOT NULL,
    charge   INT check( charge between 0 and 4 ),
-   disponible BOOLEAN NOT NULL
+   disponible INT NOT NULL
 );
 
 CREATE TABLE reloads(

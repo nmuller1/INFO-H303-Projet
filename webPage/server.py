@@ -150,9 +150,13 @@ def introScooter():
 @app.route('/deleteScooter',methods = ['POST', 'GET'])
 def deleteScooter():
     numTrottinette = request.form['numTrottinette']
-    cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
-    conn.commit()
-    result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.''
+    result = "La trottinette numero: '  + numTrottinette + ' n'existe pas."
+    cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s",(numTrottinette,))
+    scooter = cur.fetchone()
+    if scooters != None:
+        cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
+        conn.commit()
+        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.''
     return render_template('printMessage.html', result = result)
 
 @app.route('/actuScooter',methods = ['POST', 'GET'])
@@ -168,7 +172,7 @@ def scooterRepaired():
     numTrottinette = request.form['numTrottinette']
     commentaire= request.form['commentaire']
     result = "Aucune plainte n'a ete introduite pour cette trottinette."
-    cur.execute("SELECT s.plainte FROM reparations s WHERE s.scooter=%s AND s.repaireTime IS NULL",(numTrottinette,))
+    cur.execute("SELECT s.scooter FROM reparations s WHERE s.scooter=%s AND s.repaireTime IS NULL",(numTrottinette,))
     plainte = cur.fetchone()
     if plainte != None :
         cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("f",numTrottinette,))
@@ -181,6 +185,26 @@ def scooterRepaired():
 @app.route('/promoteUser',methods = ['POST', 'GET'])
 def promoteUser():
    return render_template('promoteUser.html')
+
+@app.route('/requetePromoteUser',methods = ['POST', 'GET'])
+def requetePromoteUser():
+    form = request.form
+    userID = form['userID']
+    result="L'utilisateur dispose deja du droit de recharge ou n'existe pas."
+    cur.execute("SELECT s.id FROM nUser s WHERE id not in ( SELECT id FROM CHARGER_USER) AND s.id=%s",(userID))
+    res = cur.fetchone()
+    if res != None :
+        result = "L'utilisateur : "+ userID + " dipose maintenant des droits de recharge."
+        firstName=form['firstName']
+        name=form['name']
+        phone=form['phone']
+        road=form['road']
+        roadNum=form['roadNum']
+        codePostal=form['codePostal']
+        commune=form['commune']
+        cur.execute("INSERT INTO charger_user (id,firstname,lastname,phoneNum,road,roadNum,codePostal,commune) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(userID,firstName,name,phone,road,roadNum,codePostal,commune))
+        conn.commit()
+    return render_template('printMessage.html', result=result)
 
 @app.route('/printRequests',methods = ['POST', 'GET'])
 def printRequests():
@@ -195,7 +219,6 @@ def printRequests():
    cur.execute(R5)
    Re5 = cur.fetchall()
    return render_template('printRequests.html', R1=Re1, R2=Re2, R3=Re3, R4=Re4, R5=Re5)
-
 
 if __name__ == '__main__':
    try:
