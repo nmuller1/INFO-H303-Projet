@@ -37,7 +37,7 @@ CREATE TABLE scooters(
    modele  VARCHAR(64) NOT NULL,
    plainte  BOOLEAN NOT NULL,
    charge   INT check( charge between 0 and 4 ),
-   disponible INT NOT NULL
+   disponible BOOLEAN NOT NULL
 );
 
 CREATE TABLE reloads(
@@ -47,8 +47,8 @@ CREATE TABLE reloads(
    finalLoad    INT check( finalLoad between 0 and 4 ),
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
-   destinationX DECIMAL NOT NULL,
-   destinationY DECIMAL NOT NULL,
+   destinationX DECIMAL,
+   destinationY DECIMAl,
    startTime Timestamp NOT NULL,
    endTime Timestamp CHECK(endTime>startTime),
    primary key (startTime, scooter, user_id)
@@ -62,16 +62,16 @@ CREATE TABLE reparations(
    complainTime Timestamp NOT NULL, 
    repaireTime Timestamp CHECK(repaireTime>complainTime),
    commentaire TEXT,
-   primary key (complainTime, scooter, userID)
+   primary key (complainTime, scooter, userID,mechanic)
 );
 
 CREATE TABLE trips(
    scooter INT NOT NULL REFERENCES scooters(numero),
-   userID  INT NOT NULL REFERENCES nUser(id),
+   userID  INT NOT NULL REFERENCES CHARGER_USER(id),
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
-   destinationX DECIMAL NOT NULL,
-   destinationY DECIMAL NOT NULL,
+   destinationX DECIMAL,
+   destinationY DECIMAL,
    startTime Timestamp NOT NULL,          
    endTime Timestamp  CHECK(endTime>startTime),
    primary key (startTime, scooter, userID)

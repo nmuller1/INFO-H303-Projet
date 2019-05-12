@@ -179,7 +179,7 @@ def scooterRepaired():
         conn.commit()
         cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic= %s,commentaire=%s",(session['userID'],commentaire,))
         conn.commit()
-        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.''
+        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.'
         return render_template('printMessage.html', result = result)
 
 @app.route('/promoteUser',methods = ['POST', 'GET'])
