@@ -483,6 +483,21 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAFp6WqOpzICC9k=",
+											"_parent": {
+												"$ref": "AAAAAAFp6KSbyy2CaLQ="
+											},
+											"model": {
+												"$ref": "AAAAAAFp6WqOlDH/4u8="
+											},
+											"font": "Arial;13;0",
+											"left": 53,
+											"top": 402,
+											"width": 214.0859375,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAFp6WvPjjI4dBU=",
 											"_parent": {
 												"$ref": "AAAAAAFp6KSbyy2CaLQ="
@@ -492,7 +507,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 53,
-											"top": 402,
+											"top": 417,
 											"width": 214.0859375,
 											"height": 13
 										},
@@ -507,7 +522,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 53,
-											"top": 417,
+											"top": 432,
 											"width": 214.0859375,
 											"height": 13
 										},
@@ -519,21 +534,6 @@
 											},
 											"model": {
 												"$ref": "AAAAAAFp6Wu7dzIufWA="
-											},
-											"font": "Arial;13;0",
-											"left": 53,
-											"top": 432,
-											"width": 214.0859375,
-											"height": 13
-										},
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAFp6WqOpzICC9k=",
-											"_parent": {
-												"$ref": "AAAAAAFp6KSbyy2CaLQ="
-											},
-											"model": {
-												"$ref": "AAAAAAFp6WqOlDH/4u8="
 											},
 											"font": "Arial;13;0",
 											"left": 53,
@@ -2478,6 +2478,16 @@
 						},
 						{
 							"_type": "ERDColumn",
+							"_id": "AAAAAAFp6WqOlDH/4u8=",
+							"_parent": {
+								"$ref": "AAAAAAFp6KSbyy1+xIY="
+							},
+							"name": "mechanic",
+							"type": "decimal",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
 							"_id": "AAAAAAFp6WvPdjI1h6Y=",
 							"_parent": {
 								"$ref": "AAAAAAFp6KSbyy1+xIY="
@@ -2507,17 +2517,6 @@
 							},
 							"name": "userID",
 							"type": "int",
-							"length": 0,
-							"foreignKey": true
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAFp6WqOlDH/4u8=",
-							"_parent": {
-								"$ref": "AAAAAAFp6KSbyy1+xIY="
-							},
-							"name": "mechanic",
-							"type": "decimal",
 							"length": 0,
 							"foreignKey": true
 						}

@@ -62,7 +62,7 @@ CREATE TABLE reparations(
    complainTime Timestamp NOT NULL, 
    repaireTime Timestamp CHECK(repaireTime>complainTime),
    commentaire TEXT,
-   primary key (complainTime, scooter, userID,mechanic)
+   primary key (complainTime, scooter, userID)
 );
 
 CREATE TABLE trips(

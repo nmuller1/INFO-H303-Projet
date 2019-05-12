@@ -24,7 +24,7 @@
 
 \begin{figure}[hb]
 \begin{center}
-\includegraphics[scale=0.4]{image.png} 
+\includegraphics[scale=0.25]{image.png} 
 \end{center}
 \caption{Modèle entité-association}
 \end{figure}
@@ -103,28 +103,37 @@ UtilisateurTechnicien(\underline{Identifiant, N\textsuperscript{o}Employé})
 \subsection*{Contraintes du modèle relationnel}
 Trottinette.DateMiseEnService <= Intervention.DateDeDépot
 
-Intervention.DateRéparation >= Intervention.DateD2potPlainte
-
-\section{Méthode d'extraction des données}
+Intervention.DateRéparation >= Intervention.DateDeDépotPlainte
 
 \section{Requêtes algèbre relationnel}
+-R1: \pi_{scooter, destinationX, destinationY}(\sigma_{endTime>=endTime}(Trips)\cap \sigma_{disponible='t'}(Scooter))
+\bigbreak
+-R2: \sigma_{scooter=scooter}(Reloads\cap Trips)
 
 \section{Requêtes calcul relationnel tuple}
+-R1 : \hspace{-0.2cm}\{trips.scooter, trips.destinationX, trips.destinationY | Trips(trips)\land scooters(scooter)\land trips.endTime>=\forall trips.endTime \land scooter.numero = trips.scooter\land scooter.disponible = 't'\}
+\bigbreak
+-R2 : \hspace{-0.2cm}\{i.userID | Reloads(r)\land i(Reloads(r) \land Trips(t) \land r.scooter = t.scooter)\land \forall i.scooter =  \forall r.scooter   \}
 
 \section{Choix d'implémentation}
-\subsection*{Méthode d'extraction des données}
+\subsection{Méthode d'extraction des données}
+L'extraction des données ce fait à partir d'un programme python extractData.py ce trouvant dans le dossier base de donnée qui sert donc a extraire les donnée des fichiers contenant les données a inseré dans la base de donnée. L'extraction des donnée se fait de deux manières différentes l'une pour les fichiers .xml dont la fonction xml.etree.ElementTree est utilisé pour extraire les données. Pour les fichiers .csv on ouvre simplement le fichier et on extrait les donnée a l'aide de la fonction split en fonction du caractère utilisé pour les séparations. Le programme s'occupe ensuite d'écrire les inserts automatiquement en fonction des données à introduire en prenant compte les noms avec des "'" dedans sensible a la casse. Toutes ces requêtes sont ensuite inséré dans le fichier data.sql.
 
-\subsection*{Choix du serveur}
+\subsection{Outils utilisé}
+\subsubsection*{Serveur}
+Le serveur est un serveur python facile à utilisé nommé Flask, plutôt intéressant car facile à utilisé et offre largement assez d'outils pour ce dont nous avons besoin. Session pour contenir les données du client connecté, request pour récupérer les données des forms et render\char`_template pour générer les pages html (dont les fichiers ce trouvent dans le dossier templates) avec les résultats des requêtes sql. Pour lancer le serveur il vous faut exécuter la commande \$python2 server.py (nom de votre base de donnée) (nom du propriétaire de la base de donnée).
+
+\subsubsection*{Base de donnée}
+Pour le base de donnée on a choisit postgreSQL car la sémantique est facile à comprendre et agréable a utilisé. Il possède également un large épouvantail de type de données. La création des tables ce fait a l'aide du fichier init.sql et l'insertion des données de la consigne ce fait à l'aide du fichier data.sql. Ces fichiers doivent être exécuté à l'aide de la commande \$psql -d (nom de votre base de donnée) -f (nom du fichier). Pour exécuté les requêtes et récupéré les données ou les commits on utilise la librairie psycopg2 qui offre une bonne interface pour communiqué avec posgreSQL. 
 
 \section{Hypothèses}
--Un mecanicien ne peut pas être un utilisateur et vice et vesa.
--Une plainte ne peut pas etre introduite si il y a deja une plante en cours.
--Toutes les trottinnettes inserer des données du prof sont disponibles.
-- Quand un utilisateur rends le trottinette elle est rehergée a fond ?
+-Un mécanicien ne peut pas être un utilisateur et vice versa.
 
+-Une plainte ne peut pas être introduite si il y a déjà une plante en cours.
 
+-Toutes les trottinettes insérer à partir des données de issue des consignes sont disponibles.
 
-
+-Lorsqu'un utilisateur qui a pris une trottinette pour la recharger et la rends on considère que la trottinette est rechargé au maximum. 
 
 \end{document}
 difftime|Ops\.factor|Ops\.numeric_version|Ops\.ordered|Ops\.POSIXt|options|order|ordered|outer|packageEvent|packageHasNamespace|packageStartupMessage|package_version|packBits|pairlist|parent\.env|parent\.frame|parse|parseNamespaceFile|paste|paste0|path\.expand|path\.package|pi|pipe|pmatch|pmax|pmax\.int|pmin|pmin\.int|polyroot|Position|pos\.to\.env|pretty|prettyNum|print|print\.AsIs|print\.by|print\.condition|print\.connection|print\.data\.frame|print\.Date|print\.difftime|print\.DLLInfo|print\.DLLInfoList|print\.DLLRegisteredRoutines|print\.factor|print\.function|print\.hexmode|print\.libraryIQR|print\.listof|print\.NativeRoutineList|print\.noquote|print\.numeric_version|print\.octmode|print\.packageInfo|print\.POSIXct|print\.POSIXlt|print\.proc_time|print\.restart|print\.rle|print\.simple\.list|print\.srcfile|print\.srcref|print\.summaryDefault|print\.summary\.table|print\.table|print\.warnings|prmatrix|proc\.time|prod|prop\.table|psigamma|pushBack|pushBackLength|q|qr|qr\.coef|qr\.fitted|qr\.Q|qr\.qty|qr\.qy|qr\.R|qr\.resid|qr\.solve|qr\.X|quarters|quarters\.Date|quarters\.POSIXt|quit|quote|range|rank|rapply|raw|rawConnection|rawConnectionValue|rawShift|rawToBits|rawToChar|rbind|rbind\.data\.frame|rcond|Re|readBin|readChar|read\.dcf|readline|readLines|readRDS|readRenviron|real|Recall|Reduce|regexec|regexpr|reg\.finalizer|registerS3method|registerS3methods|regmatches|remove|removeCConverter|removeTaskCallback|rep|rep\.Date|rep\.factor|rep\.int|replace|replicate|rep\.numeric_version|rep\.POSIXct|rep\.POSIXlt|require|requireNamespace|restartDescription|restartFormals|retracemem|rev|R\.home|rle|rm|RNGkind|RNGversion|round|round\.Date|round\.POSIXt|row|rowMeans|rownames|row\.names|row\.names\.data\.frame|rowsum|rowsum\.data\.frame|rowSums|R_system_version|R\.version|R\.Vera
