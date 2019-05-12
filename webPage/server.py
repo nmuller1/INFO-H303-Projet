@@ -113,6 +113,8 @@ def infoPlainte():
       conn.commit()
       cur.execute("INSERT INTO reparations (scooter, userID, complainTime) VALUES (%s, %s, to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'))",(numTrottinette, session['userID']))
       conn.commit()
+      cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("f",numTrottinette,))
+      conn.commit()
       result = 'La demande de plainte pour la trottinette numero: '  + numTrottinette + ' a ete introduite.'
    return render_template('printMessage.html', result = result)
 
@@ -127,6 +129,42 @@ def consultTrips():
 @app.route('/manageCharge',methods = ['POST', 'GET'])
 def manageCharge():
    return render_template('manageCharge.html')
+
+@app.route('/loadingScooter',methods = ['POST', 'GET'])
+def loadingScooter():
+    form = request.form
+    numTrottinette = form['numTrottinette']
+    result = "La trottinette numero: "  + numTrottinette + " n'existe pas ou n'est pas disponible."
+    cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s AND s.disponible=%s",(numTrottinette,"t"))
+    scooter = cur.fetchone()
+    if scooter != None:
+        cur.execute("SELECT t.destinationX,t.destinationY FROM trips t WHERE t.scooter=%s AND t.endTime > all ( SELECT endTime FROM trips WHERE scooter=%s",(numTrottinette,numTrottinette,))
+        sourceX,sourceY=fetchall()
+        cur.execute("SELECT s.charge FROM scooters s WHERE s.numero=%s",(numTrottinette))
+        initialLoad=cur.fetchone()
+        cur.execute("INSERT INTO reloads(scooter,user_id,initialLoad,finalLoad,sourceX,sourceY,destinationX,destinationY,startTime,endTime) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'),%s)",(numTrottinette,session['userID'],initialLoad,NULL,sourceX,sourceY,NULL,NULL,NULL,))
+        conn.commit()
+        cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("f",numTrottinette,))
+        conn.commit()
+        result = 'La trottinette numero: '  + numTrottinette + ' est en cours de chargement.'
+    return render_template('printMessage.html', result = result)
+                    
+@app.route('/loadedScooter',methods = ['POST', 'GET'])
+def loadedScooter():
+    form = request.form
+    numTrottinette = form['numTrottinette']
+    destinationX=form['destinationX']
+    destinationY=form['destinationY']
+    result = "La trottinette numero: "  + numTrottinette + " n'est pas en chargement."
+    cur.execute("SELECT scooter FROM reloads WHERE scooter=%s AND endTime IS NULL",(numTrottinette,))
+    scooter = cur.fetchone()
+    if scooter != None:
+        cur.execute("UPDATE reloads SET finalLoad=%s,destinationX=%s,destinationY=%s,endTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\') WHERE scooter=%s AND endTime IS NULL",(4,numTrottinette,destinationX,destinationY))
+        conn.commit()
+        cur.execute("UPDATE scooter SET disponible=%s WHERE scooter=%s",("t",numTrottinette,))
+        conn.commit()
+        result = 'La trottinette numero: '  + numTrottinette + ' a bien ete remise en service.'
+    return render_template('printMessage.html', result = result)
 
 #========================================MECHANIC PAGES=================================================================
 @app.route('/mechanic',methods = ['POST', 'GET'])
@@ -150,10 +188,10 @@ def introScooter():
 @app.route('/deleteScooter',methods = ['POST', 'GET'])
 def deleteScooter():
     numTrottinette = request.form['numTrottinette']
-    result = "La trottinette numero: '  + numTrottinette + ' n'existe pas."
+    result = "La trottinette numero: "  + numTrottinette + " n'existe pas."
     cur.execute("SELECT s.id FROM scooters s WHERE s.numero=%s",(numTrottinette,))
     scooter = cur.fetchone()
-    if scooters != None:
+    if scooter != None:
         cur.execute("DELETE FROM scooters WHERE numero = %s",(numTrottinette))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete supprimee du systeme.'
@@ -178,9 +216,9 @@ def scooterRepaired():
     cur.execute("SELECT s.scooter FROM reparations s WHERE s.scooter=%s AND s.repaireTime IS NULL",(numTrottinette,))
     plainte = cur.fetchone()
     if plainte != None :
-        cur.execute("UPDATE scooters SET plainte=%s WHERE numero=%s",("f",numTrottinette,))
+        cur.execute("UPDATE scooters SET plainte=%s,disponible=%s WHERE numero=%s",("f","t",numTrottinette,))
         conn.commit()
-        cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic= %s,commentaire=%s",(session['userID'],commentaire,))
+        cur.execute("UPDATE reparations SET repaireTime=to_timestamp('"+datetime.datetime.now().isoformat()+"','YYYY-MM-DD\"T\"HH24:MI:SS\'), mechanic=%s,commentaire=%s WHERE s.scooter=%s AND s.repaireTime IS NULL",(session['userID'],commentaire,numTrottinette))
         conn.commit()
         result = 'La trottinette numero: '  + numTrottinette + ' a bien ete reparee.'
         return render_template('printMessage.html', result = result)
