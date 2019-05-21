@@ -67,7 +67,7 @@ CREATE TABLE reparations(
 
 CREATE TABLE trips(
    scooter INT NOT NULL REFERENCES scooters(numero),
-   userID  INT NOT NULL REFERENCES nUser(id),
+   userID  INT NOT NULL REFERENCES CHARGER_USER(id),
    sourceX  DECIMAL NOT NULL,
    sourceY DECIMAL NOT NULL,
    destinationX DECIMAL,
