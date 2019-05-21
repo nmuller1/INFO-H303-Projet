@@ -169,7 +169,6 @@ def loadedScooter():
 #========================================MECHANIC PAGES=================================================================
 @app.route('/mechanic',methods = ['POST', 'GET'])
 def mechanic():
-    
     return render_template('mechanic.html', users=trips)
 
 @app.route('/manageScooter',methods = ['POST', 'GET'])
@@ -233,9 +232,11 @@ def requetePromoteUser():
     form = request.form
     userID = form['userID']
     result="L'utilisateur dispose deja du droit de recharge ou n'existe pas."
-    cur.execute("SELECT s.id FROM nUser s WHERE s.id=%s AND s.id not in ( SELECT id FROM CHARGER_USER)",(userID))
-    res = cur.fetchone()
-    if res != None :
+    cur.execute("SELECT s.id FROM nUser s WHERE s.id=%s",(userID,))
+    res=cur.fetchone()
+    cur.execute("SELECT s.id FROM CHARGER_USER WHERE s.id=%s",(userID,))
+    res2=cur.fetchone()
+    if res != None and res2 == None :
         result = "L'utilisateur : "+ userID + " dipose maintenant des droits de recharge."
         firstName=form['firstName']
         name=form['name']
